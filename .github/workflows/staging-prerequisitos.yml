@@ -1,0 +1,28 @@
+name: STAGING Prerequisitos
+on:
+  workflow_dispatch:
+
+jobs:
+  verificar-secretos-y-registry-staging:
+    name: Verificar Secretos CI y Registry STAGING
+    runs-on: windows-latest
+    env:
+      STAGING_HOST_DESPLIEGUE: ${{ secrets.STAGING_HOST_DESPLIEGUE }}
+      STAGING_USUARIO_DESPLIEGUE: ${{ secrets.STAGING_USUARIO_DESPLIEGUE }}
+      STAGING_LLAVE_SSH_DESPLIEGUE: ${{ secrets.STAGING_LLAVE_SSH_DESPLIEGUE }}
+      STAGING_HOST_REGISTRY: ${{ secrets.STAGING_HOST_REGISTRY }}
+      STAGING_USUARIO_REGISTRY: ${{ secrets.STAGING_USUARIO_REGISTRY }}
+      STAGING_PASSWORD_REGISTRY: ${{ secrets.STAGING_PASSWORD_REGISTRY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verificar secretos y acceso a registry
+        shell: powershell
+        run: |
+          powershell -ExecutionPolicy Bypass -File .\scripts\migracion\verificar_secretos_ci_registry_staging.ps1
+      - name: Publicar evidencia de prerequisitos STAGING
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidencia-prerequisitos-staging
+          path: |
+            docs/migracion/ejecucion/27B_Verificacion_Secretos_CI_Registry_STAGING_*.log
