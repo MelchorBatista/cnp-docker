@@ -1,0 +1,19 @@
+﻿=== PREREQUISITOS LOCALES DUAL SQL ===
+Archivo entorno: C:\Desarrollo\cnp-docker\scripts\migracion\..\..\backend\.env.local
+Host VALIDACION: q1491n2023:1433
+Host RECEPCION: d1491n2023:1433
+Auth VALIDACION: sql
+Auth RECEPCION: sql
+
+WSL: OK
+Docker version: OK
+Docker info: OK
+VALIDACION red: True
+VALIDACION permisos: FALLA
+VALIDACION detalle: Exception calling "Open" with "0" argument(s): "Cannot open database "VALIDACION" requested by the login. The login failed.
+Login failed for user 'RNP'."
+RECEPCION red: True
+RECEPCION permisos: OK
+RECEPCION detalle: Base=DBCSASPv2 Leer=1 Insertar=1 Actualizar=1 Eliminar=1
+Transicion auth VALIDACION pendiente: False
+Log: C:\Desarrollo\cnp-docker\scripts\migracion\..\..\docs\migracion\ejecucion\29A_Verificacion_Prerequisitos_Locales_Dual_SQL_20260306_103843.log

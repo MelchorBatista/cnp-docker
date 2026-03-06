@@ -6,6 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Validar archivo critico de migracion
+        run: |
+          if [ ! -f "Migracion_Docker.js" ]; then
+            echo "ERROR: Falta el archivo critico Migracion_Docker.js"
+            exit 1
+          fi
       - name: Setup Node
         uses: actions/setup-node@v4
         with:

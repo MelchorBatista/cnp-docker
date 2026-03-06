@@ -1,4 +1,4 @@
-﻿/*
+/*
 * Informacion general del plan
 	- Proyecto: CNP
 	- Fecha base: 2026-02-24
@@ -18,7 +18,7 @@
 	- Frontend React/Vite con build reproducible y entrega estatica.
 	- Proxy reverso para /cnp, /api y /socket.io.
 	- Gestion de secretos fuera del repositorio.
-	- Pipeline CI/CD para build, scan y publicacion de imagenes.
+	- Pipeline CI/CD para build, scan y empaquetado local de imagenes.
 	- Despliegue progresivo DEV -> STAGING -> PRODUCCION.
 	- Uso obligatorio de SQL Server institucional como unico motor de base de datos.
 
@@ -39,15 +39,16 @@
 
 * Supuestos
 	- SQL Server institucional y SMTP se consumen como servicios externos.
-	- Existe registry privado para imagenes.
+	- La entrega inicial a infraestructura se realiza con imagenes exportadas en archivos tar.
 	- Seguridad aprueba mecanismo institucional de secretos.
 	- Redes habilita conectividad necesaria entre contenedores y servicios externos.
 
 * Dependencias externas
 	- Certificados TLS.
 	- DNS y reglas de firewall.
-	- Credenciales de CI/CD y permisos de despliegue.
+	- Credenciales SQL para VALIDACION, CONSULTA y RECEPCION.
 	- Ventanas de cambio autorizadas.
+	- Coordinacion con infraestructura para despliegue controlado en c1491.
 
 * Riesgos iniciales y mitigacion
 	- Rutas Windows hardcodeadas.
@@ -115,11 +116,16 @@ A. SPRINT 1 - DESCUBRIMIENTO Y ARQUITECTURA OBJETIVO
 		A.2.5 Dia 5
 			//A.2.5.1 Consolidar backlog y emitir decision go/no-go.
 			//A.2.5.2 Aprobar catalogo oficial y guia de instalacion completa.
-			A.2.5.3 Validar prerequisitos externos para STAGING (TLS, DNS/firewall, credenciales CI/CD, acceso a registry y ventana de cambio).
-			A.2.5.4 Evidencia: backlog aprobado + acta de decision registrada + catalogo/guia aprobados + checklist de prerequisitos externos.
+			A.2.5.3 Validar prerrequisitos locales de STAGING (Docker local, conectividad SQL de VALIDACION/CONSULTA/RECEPCION y paquete de entrega a infraestructura).
+			A.2.5.4 Evidencia: backlog aprobado + catalogo/guia aprobados + prueba local Docker + conectividad SQL de VALIDACION/CONSULTA/RECEPCION + validacion de permisos + checklist de entrega a infraestructura.
 	A.3 Entregables obligatorios
 		A.3.1 Acta de kickoff tecnico.
-		A.3.2 Inventario tecnico completo (servicios, puertos, variables, dependencias).
+		//A.3.2 Inventario tecnico completo (servicios, puertos, variables, dependencias).
+			//A.3.2.1 c1491 identificado como WebServer administrado por infraestructura.
+			//A.3.2.2 q1491n2023 identificado como host de VALIDACION (solo lectura).
+			//A.3.2.3 d1491n2023 identificado como host de CONSULTA (solo lectura operativa sobre vistas).
+			//A.3.2.4 d1491n2023 identificado como host de RECEPCION (lectura/escritura).
+			//A.3.2.5 Requisito registrado: migrar VALIDACION de autenticacion Windows a autenticacion SQL dedicada antes de la entrega Docker.
 		A.3.3 Arquitectura objetivo por entorno (DEV/STAGING/PROD).
 		A.3.4 Matriz de secretos y plan de migracion.
 		A.3.5 Backlog priorizado con responsables y estimacion.
@@ -144,6 +150,12 @@ A. SPRINT 1 - DESCUBRIMIENTO Y ARQUITECTURA OBJETIVO
 			A.3.9.6 Ejecutar validaciones: wsl --status, docker version, docker info, code --version.
 			A.3.9.7 Instalar Trivy, Hadolint y herramienta de SBOM mediante script PowerShell (primero winget; si falla, chocolatey).
 			A.3.9.8 Ejecutar doble validacion en terminal de VS Code de versiones y PATH para Trivy/Hadolint/SBOM.
+		A.3.10 Paquete local de entrega a infraestructura para STAGING.
+			A.3.10.1 Imagenes Docker exportadas en archivos tar.
+			A.3.10.2 Compose de referencia para infraestructura.
+			//A.3.10.3 Plantilla .env con contrato SQL de VALIDACION, CONSULTA y RECEPCION.
+			A.3.10.4 Runbook de entrega en espanol.
+			A.3.10.5 Manifest y checksums de artefactos.
 	A.4 Definition of Done (DoD) Sprint 1
 		A.4.1 Cierre documentado de Fase 0 validado como precondicion.
 		A.4.2 Acta de kickoff aprobada y archivada.
@@ -159,8 +171,9 @@ A. SPRINT 1 - DESCUBRIMIENTO Y ARQUITECTURA OBJETIVO
 		A.4.12 Docker Desktop operativo con integracion WSL2 activa.
 		A.4.13 VS Code preparado para el proyecto (extensiones obligatorias instaladas).
 		A.4.14 Prueba smoke de herramientas base completada (wsl/docker/code) con resultados registrados.
-		A.4.15 Prerequisitos externos de STAGING validados (TLS, DNS/firewall, credenciales CI/CD, registry y ventana de cambio).
+		A.4.15 Prerrequisitos locales de STAGING validados (Docker local, conectividad SQL de VALIDACION, CONSULTA y RECEPCION, permisos por rol y checklist de entrega a infraestructura).
 		A.4.16 Herramientas de seguridad (Trivy/Hadolint/SBOM) instaladas y validadas con doble verificacion de version y PATH.
+		//A.4.17 Separacion documentada de conexiones VALIDACION, CONSULTA y RECEPCION con sus roles operativos.
 
 B. SPRINT 2 - BASE DOCKER Y ENTORNO DEV
 	B.1 Objetivo del Sprint
@@ -171,9 +184,9 @@ B. SPRINT 2 - BASE DOCKER Y ENTORNO DEV
 			B.2.1.2 Evidencia: documento versionado de estandar.
 		B.2.2 Dia 7
 			B.2.2.1 Disenar y validar Dockerfiles de backend/frontend/proxy.
-			B.2.2.2 Configurar pipeline CI/CD base en runner (build + scan con Trivy/Hadolint + generacion SBOM + push a registry de pruebas).
+			B.2.2.2 Configurar pipeline CI/CD base en runner (build + scan con Trivy/Hadolint + generacion SBOM + empaquetado local de artefactos Docker).
 			B.2.2.3 Validar en runner CI la disponibilidad de Trivy/Hadolint/SBOM con doble chequeo de version y PATH.
-			B.2.2.4 Evidencia: build local exitoso de imagenes + ejecucion exitosa de pipeline en rama de integracion + registros de verificacion de herramientas.
+			B.2.2.4 Evidencia: build local exitoso de imagenes + ejecucion exitosa de pipeline en rama de integracion + artefactos locales exportables + registros de verificacion de herramientas.
 		B.2.3 Dia 8
 			B.2.3.1 Externalizar variables y eliminar localhost hardcodeado critico.
 			B.2.3.2 Evidencia: matriz de variables validada.
@@ -190,7 +203,7 @@ B. SPRINT 2 - BASE DOCKER Y ENTORNO DEV
 		B.3.4 Matriz de variables + .env.example saneado.
 		B.3.5 .dockerignore optimizado.
 		B.3.6 Runbook DEV v1.
-		B.3.7 Pipeline CI/CD base habilitado (build, scan y push a registry en entorno DEV/CI).
+		B.3.7 Pipeline CI/CD base habilitado (build, scan y empaquetado local de artefactos en entorno DEV/CI).
 		B.3.8 Toolchain de seguridad operativa en CI/CD (Trivy, Hadolint y generacion de SBOM) con verificacion de version/PATH.
 	B.4 Definition of Done (DoD) Sprint 2
 		B.4.1 Dockerfiles construyen en entorno limpio.
@@ -200,7 +213,7 @@ B. SPRINT 2 - BASE DOCKER Y ENTORNO DEV
 		B.4.5 .dockerignore reduce contexto de build de forma medible.
 		B.4.6 Runbook DEV validado por al menos 2 miembros del equipo.
 		B.4.7 No se incorpora ningun motor alterno a SQL Server institucional.
-		B.4.8 Pipeline CI/CD base ejecuta build, scan y push en entorno controlado.
+		B.4.8 Pipeline CI/CD base ejecuta build, scan y empaquetado en entorno controlado.
 		B.4.9 Toolchain de seguridad en CI/CD validada (Trivy/Hadolint/SBOM con version y PATH correctos).
 
 C. SPRINT 3 - INTEGRACION EXTERNA Y STAGING
@@ -208,11 +221,11 @@ C. SPRINT 3 - INTEGRACION EXTERNA Y STAGING
 		C.1.1 Dejar STAGING estable con integraciones externas y baseline de seguridad.
 	C.2 Plan diario (5 dias)
 		C.2.1 Dia 11
-			C.2.1.1 Confirmar prerequisitos externos habilitados para STAGING (TLS, DNS/firewall, secretos institucionales y credenciales de despliegue).
+			C.2.1.1 Confirmar prerequisitos habilitados para STAGING (TLS, DNS/firewall, secretos institucionales, accesos SQL y coordinacion con infraestructura).
 			C.2.1.2 Migrar secretos a mecanismo institucional y aplicar hardening inicial.
 			C.2.1.3 Evidencia: checklist de prerequisitos + checklist de secretos migrados + seguridad base.
 		C.2.2 Dia 12
-			C.2.2.1 Publicar release y desplegar en STAGING.
+			C.2.2.1 Entregar paquete versionado a infraestructura y ejecutar despliegue controlado en STAGING.
 			C.2.2.2 Evidencia: acta de despliegue STAGING.
 		C.2.3 Dia 13
 			C.2.3.1 Validar conectividad y consultas criticas en SQL Server desde STAGING.
@@ -226,7 +239,7 @@ C. SPRINT 3 - INTEGRACION EXTERNA Y STAGING
 	C.3 Entregables obligatorios
 		C.3.1 Secretos institucionales aplicados en STAGING.
 		C.3.2 Hardening inicial aplicado.
-		C.3.3 Imagenes versionadas publicadas en registry.
+		C.3.3 Paquete versionado de imagenes entregado a infraestructura (tar + compose + env + runbook + checksums).
 		C.3.4 STAGING desplegado y probado.
 		C.3.5 Conectividad validada SQL Server institucional y SMTP desde STAGING.
 		C.3.6 Reporte de performance basico.

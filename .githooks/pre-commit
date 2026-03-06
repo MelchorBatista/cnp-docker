@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+set -eu
+
+ARCHIVO_CRITICO="Migracion_Docker.js"
+
+if git diff --cached --name-status | grep -Eq "^D[[:space:]]+${ARCHIVO_CRITICO}$"; then
+  echo "ERROR: No se permite eliminar ${ARCHIVO_CRITICO}."
+  exit 1
+fi
+
+if ! git ls-files --error-unmatch "${ARCHIVO_CRITICO}" >/dev/null 2>&1; then
+  echo "ERROR: El repositorio debe contener ${ARCHIVO_CRITICO}."
+  exit 1
+fi

@@ -1,0 +1,22 @@
+﻿=== PREREQUISITOS LOCALES SQL ===
+Archivo entorno: C:\Desarrollo\cnp-docker\scripts\migracion\..\..\backend\.env.local
+Host VALIDACION: q1491n2023:1433
+Host CONSULTA: d1491n2023:1433
+Host RECEPCION: d1491n2023:1433
+Auth VALIDACION: sql
+Auth CONSULTA: sql
+Auth RECEPCION: sql
+
+WSL: OK
+Docker version: OK
+Docker info: OK
+VALIDACION red: True
+VALIDACION permisos: OK
+VALIDACION detalle: Base=TablasComunes Leer=1 Insertar=0 Actualizar=0 Eliminar=0
+CONSULTA red: True
+CONSULTA permisos: REVISAR
+CONSULTA detalle: Base=DBCSASPv2 Leer=1 Insertar=1 Actualizar=1 Eliminar=1
+RECEPCION red: True
+RECEPCION permisos: OK
+RECEPCION detalle: Base=DBCSASPv2 Leer=1 Insertar=1 Actualizar=1 Eliminar=1
+Log: C:\Desarrollo\cnp-docker\scripts\migracion\..\..\docs\migracion\ejecucion\29A_Verificacion_Prerequisitos_Locales_Dual_SQL_20260306_111420.log
