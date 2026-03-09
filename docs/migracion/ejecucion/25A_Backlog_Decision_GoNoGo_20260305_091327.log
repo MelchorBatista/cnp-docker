@@ -1,0 +1,32 @@
+﻿Inicio consolidacion backlog y decision go/no-go: 2026-03-05T09:13:27.9907960-04:00
+Punto del plan: A.2.5.1
+
+Entradas utilizadas:
+- docs/migracion/ejecucion/20_Sprint1_Dia3_A233_Documento_Stack_Tecnicas_Arquitectura.md
+- docs/migracion/ejecucion/23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md
+- docs/migracion/ejecucion/24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md
+- Migracion_Docker.js
+
+Backlog consolidado (IDs):
+- BLG-001 Retirar VITE_SECRET_KEY del frontend y migrar logica sensible al backend.
+- BLG-002 Migrar secretos criticos de backend/.env.production a vault/secreto runtime.
+- BLG-003 Definir provisionamiento institucional de llave privada JWT y prueba de carga.
+- BLG-004 Endurecer reglas de ignore para .env.* y artefactos sensibles.
+- BLG-005 Incorporar escaneo de secretos en CI como gate de PR.
+- BLG-006 Formalizar bitacora de rotacion y vencimiento de secretos.
+- BLG-007 Aprobar catalogo oficial de stack (A.2.5.2).
+- BLG-008 Aprobar guia de instalacion completa (A.2.5.2).
+- BLG-009 Validar certificados TLS para STAGING (A.2.5.3).
+- BLG-010 Validar DNS y reglas firewall para STAGING (A.2.5.3).
+- BLG-011 Validar credenciales CI/CD y permisos de despliegue (A.2.5.3).
+- BLG-012 Validar acceso al registry privado (A.2.5.3).
+- BLG-013 Confirmar ventana de cambio autorizada para STAGING (A.2.5.3).
+
+Criterios de decision:
+- C1 Backlog consolidado con prioridad, responsable y esfuerzo: CUMPLE.
+- C2 Sin bloqueadores criticos abiertos para cierre de Sprint 1: NO CUMPLE.
+- C3 Prerequisitos externos STAGING validados: NO CUMPLE (pendiente A.2.5.3).
+
+Decision emitida:
+- Estado de cierre Sprint 1: NO-GO TEMPORAL.
+- Estado operativo para continuar secuencia interna: GO para ejecutar A.2.5.2 y A.2.5.3.

@@ -1,0 +1,39 @@
+﻿Inicio aprobacion catalogo oficial y guia de instalacion: 2026-03-05T09:24:34.8655777-04:00
+Punto del plan: A.2.5.2
+
+Fuentes consolidadas:
+- docs/migracion/ejecucion/10_Sprint1_Dia2_A221_Inventario_Tecnico.md
+- docs/migracion/ejecucion/11_Sprint1_Dia2_A222_Instalacion_Base_Estaciones.md
+- docs/migracion/ejecucion/12_Sprint1_Dia2_A223_Instalacion_Base_Runner_CI.md
+- docs/migracion/ejecucion/13_Sprint1_Dia2_A224_Checklist_Instalacion_Comandos_Validados.md
+- docs/migracion/ejecucion/14_Sprint1_Dia2_A225_Instalacion_WSL2_Docker_Laptop.md
+- docs/migracion/ejecucion/15_Sprint1_Dia2_A226_Evidencia_WSL_Docker_OK.md
+- docs/migracion/ejecucion/16_Sprint1_Dia2_A227_Instalacion_Toolchain_Seguridad_Estacion_Runner.md
+- docs/migracion/ejecucion/17_Sprint1_Dia2_A228_Doble_Verificacion_Toolchain_Seguridad.md
+- docs/migracion/ejecucion/18_Sprint1_Dia3_A231_Tecnicas_Transversales.md
+- docs/migracion/ejecucion/20_Sprint1_Dia3_A233_Documento_Stack_Tecnicas_Arquitectura.md
+- docs/migracion/ejecucion/21_Sprint1_Dia3_A234_Configuracion_VSCode_Docker_WSL.md
+- docs/migracion/ejecucion/22_Sprint1_Dia3_A235_Evidencia_Extensiones_VSCode_Apertura_Workspace.md
+- backend/package.json
+- frontend/package.json
+- .github/workflows/ci.yml
+
+Catalogo oficial aprobado (resumen):
+- Runtime: Node.js 18 LTS (politica obligatoria en CI y despliegue).
+- Lenguaje: TypeScript 5.x.
+- Frontend: React 18 + Vite 6.
+- Backend: Express 4 + Socket.IO 4.
+- Base de datos: SQL Server institucional (obligatorio y no reemplazable).
+- Proxy: Nginx.
+- Seguridad: Trivy + Hadolint + Syft.
+- Calidad: ESLint + Prettier + Jest (backend).
+
+Guia de instalacion consolidada (secciones):
+- Estacion de desarrollo.
+- Runner CI Windows (workflow + scripts).
+- Laptop Windows 11 + WSL2 + Docker Desktop + VS Code.
+
+Notas de cumplimiento registradas:
+- Node 18 requerido; estacion actual con Node 24 requiere ajuste administrativo documentado.
+- Docker/WSL en laptop validados en estado OK.
+- Extensiones VS Code obligatorias validadas en estado OK.

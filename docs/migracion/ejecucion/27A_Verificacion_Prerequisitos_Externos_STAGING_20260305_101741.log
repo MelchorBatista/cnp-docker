@@ -1,0 +1,29 @@
+﻿Inicio verificacion prerequisitos externos STAGING: 2026-03-05T10:17:54.3015005-04:00
+Proyecto: C:\Desarrollo\cnp-docker
+Host web staging: c1491
+Host SQL staging: d1491n2023
+Puerto SQL staging: 1433
+Host registry: 
+Ruta acta ventana: C:\Desarrollo\cnp-docker\.\\docs\\migracion\\operaciones\\Acta_Ventana_Cambio_STAGING.md
+Aplicar correcciones locales: True
+Resultado general: BLOQUEADO
+
+[Checklist]
+[{"prerequisito":"TLS (certificado y llave staging disponibles localmente)","estado":"PARCIAL","detalle":"certificado=True; llave=True; pendiente validacion institucional de uso"},{"prerequisito":"TLS (metadatos del certificado staging)","estado":"OK","detalle":"subject=CN=c1491.map.local, OU=Desarrollo, O=MAP, L=Santo Domingo, S=Santo Domingo, C=DO; issuer=CN=c1491.map.local, OU=Desarrollo, O=MAP, L=Santo Domingo, S=Santo Domingo, C=DO; notBefore=2025-09-11T13:53:58.0000000-04:00; notAfter=2026-09-11T13:53:58.0000000-04:00"},{"prerequisito":"DNS host web staging","estado":"OK","detalle":"192.168.30.67"},{"prerequisito":"DNS host SQL staging","estado":"OK","detalle":"d1491n2023 =\u003e 192.168.30.162"},{"prerequisito":"Firewall/red host web (puertos requeridos)","estado":"OK","detalle":"c1491:443=OK"},{"prerequisito":"Firewall/red host web (puertos opcionales)","estado":"OBSERVACION","detalle":"c1491:8443=FALLA"},{"prerequisito":"Firewall/red host SQL (puerto 1433)","estado":"OK","detalle":"d1491n2023:1433=OK"},{"prerequisito":"Credenciales CI/CD de despliegue (referencias de secretos en workflows)","estado":"PARCIAL","detalle":"Referencias de secretos detectadas en workflows"},{"prerequisito":"Acceso a registry privado","estado":"PENDIENTE_EXTERNO","detalle":"host registry=; auths locales=0; login_local=NO_INTENTADO"},{"prerequisito":"Ventana de cambio autorizada","estado":"PARCIAL","detalle":"Acta presente pero sin datos minimos de aprobacion; plantilla_creada=False"}]
+
+[Puertos Web Requeridos]
+{"host":"c1491","puerto":443,"estado":"OK","detalle":"Conectividad TCP habilitada"}
+
+[Puertos Web Opcionales]
+{"host":"c1491","puerto":8443,"estado":"FALLA","detalle":"Sin respuesta TCP"}
+
+[Puerto SQL]
+{"host":"d1491n2023","puerto":1433,"estado":"OK","detalle":"Conectividad TCP habilitada"}
+
+[Referencias secretos en CI]
+secrets.STAGING_HOST_DESPLIEGUE
+secrets.STAGING_USUARIO_DESPLIEGUE
+secrets.STAGING_LLAVE_SSH_DESPLIEGUE
+secrets.STAGING_HOST_REGISTRY
+secrets.STAGING_USUARIO_REGISTRY
+secrets.STAGING_PASSWORD_REGISTRY

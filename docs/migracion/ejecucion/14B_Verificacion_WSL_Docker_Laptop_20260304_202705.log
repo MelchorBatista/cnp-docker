@@ -1,0 +1,7 @@
+﻿Inicio verificacion WSL/Docker: 2026-03-04T20:27:06.2209919-04:00
+Directorio de trabajo: C:\Desarrollo\cnp-docker
+Comando docker resuelto: C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe
+{"codigo":0,"salida":"Default Distribution: Ubuntu\r\n\r\nDefault Version: 2\r\n\r\nWSL1 is not supported with your current machine configuration.\r\n\r\nPlease enable the \"Windows Subsystem for Linux\" optional component to use WSL1."}
+{"codigo":0,"salida":"NAME              STATE           VERSION\r\n\r\n* Ubuntu            Running         2\r\n\r\n  docker-desktop    Running         2"}
+{"codigo":0,"salida":"Client:\r\n Version:           29.2.1\r\n API version:       1.53\r\n Go version:        go1.25.6\r\n Git commit:        a5c7197\r\n Built:             Mon Feb  2 17:20:16 2026\r\n OS/Arch:           windows/amd64\r\n Context:           desktop-linux\r\n\r\nServer: Docker Desktop 4.63.0 (220185)\r\n Engine:\r\n  Version:          29.2.1\r\n  API version:      1.53 (minimum version 1.44)\r\n  Go version:       go1.25.6\r\n  Git commit:       6bc6209\r\n  Built:            Mon Feb  2 17:17:24 2026\r\n  OS/Arch:          linux/amd64\r\n  Experimental:     false\r\n containerd:\r\n  Version:          v2.2.1\r\n  GitCommit:        dea7da592f5d1d2b7755e3a161be07f43fad8f75\r\n runc:\r\n  Version:          1.3.4\r\n  GitCommit:        v1.3.4-0-gd6d73eb8\r\n docker-init:\r\n  Version:          0.19.0\r\n  GitCommit:        de40ad0"}
+[{"verificacion":"wsl --status","codigo":0,"estado":"OK"},{"verificacion":"docker version","codigo":0,"estado":"OK"}]

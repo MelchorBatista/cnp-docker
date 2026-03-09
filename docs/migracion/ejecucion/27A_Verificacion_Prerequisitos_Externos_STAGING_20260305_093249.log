@@ -1,0 +1,149 @@
+﻿Inicio verificacion prerequisitos externos STAGING: 2026-03-05T09:33:03.9106375-04:00
+Proyecto: C:\Desarrollo\cnp-docker
+Host staging evaluado: c1491
+Puertos evaluados: 443, 8443, 1433
+Resultado general: BLOQUEADO
+
+[Checklist]
+[{"prerequisito":"TLS (certificado staging y llave privada localmente identificables)","estado":"PARCIAL","detalle":"certificado: True; llave: True; requiere validacion institucional final"},{"prerequisito":"TLS (metadatos tecnicos del certificado staging)","estado":"OK","detalle":"Archivo encontrado; OpenSSL no disponible para inspeccion"},{"prerequisito":"DNS de host staging","estado":"OK","detalle":"192.168.30.67"},{"prerequisito":"Firewall/red (conectividad TCP puertos objetivo)","estado":"PARCIAL","detalle":"443=OK; 8443=FALLA; 1433=FALLA"},{"prerequisito":"Credenciales CI/CD de despliegue","estado":"PENDIENTE_EXTERNO","detalle":"No hay referencias explicitas de secretos de despliegue en workflows."},{"prerequisito":"Acceso a registry privado","estado":"PENDIENTE_EXTERNO","detalle":"Referencias registry: 117; credenciales locales docker auths: 0"},{"prerequisito":"Ventana de cambio autorizada para STAGING","estado":"PENDIENTE_EXTERNO","detalle":"Referencias documentales detectadas: 15. Se requiere acta institucional de aprobacion."}]
+
+[Pruebas de puertos]
+[{"puerto":443,"estado":"OK","detalle":"Conectividad TCP habilitada"},{"puerto":8443,"estado":"FALLA","detalle":"Sin respuesta TCP"},{"puerto":1433,"estado":"FALLA","detalle":"Sin respuesta TCP"}]
+
+[Referencias CI/CD secrets]
+
+[Referencias registry]
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\02_Sprint1_Arquitectura_Objetivo.md:67:	- Hardening TLS, rate limiting y politicas estrictas de secretos.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\01_Sprint1_Dia1_Kickoff.md:12:- Gestion de secretos fuera del repositorio.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:1:# Paso 3 - Sprint 1 - Matriz de secretos y registro de riesgos (A.2.4 / A.3.4.1 / A.3.4.2)
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:8:Catalogar secretos del proyecto y establecer un registro de riesgos con controles definidos para reducir riesgo tecnico antes de iniciar la implementacion Docker.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:10:## 2) Matriz de secretos (sin exponer valores)
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:12:| ID | Secreto / Variable | Donde se detecta | Uso | Entorno | Metodo objetivo | Rotacion | Responsable |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:14:| S-01 | `DB_USER` | `backend/.env.*` | Autenticacion SQL Server institucional | DEV/STAGING/PROD | `Docker secret` o vault institucional (no en git) | 90 dias | DBA + DevOps |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:15:| S-02 | `DB_PASSWORD` | `backend/.env.*` | Clave SQL Server institucional | DEV/STAGING/PROD | `Docker secret` o vault institucional (no en git) | 60 dias | DBA + DevOps |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:16:| S-03 | `JWT_SECRET` | `backend/.env.*` | Firma/verificacion de token | DEV/STAGING/PROD | `Docker secret` (backend only) | 90 dias | Backend + Seguridad |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:17:| S-04 | `SMTP_USER` | `backend/.env.*` | Credenciales SMTP | DEV/STAGING/PROD | `Docker secret` o vault institucional | 90 dias | Infra + Seguridad |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:18:| S-05 | `SMTP_PASS` | `backend/.env.*` | Credenciales SMTP | DEV/STAGING/PROD | `Docker secret` o vault institucional | 60 dias | Infra + Seguridad |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:19:| S-06 | `JWT_PRIVATE_KEY_PATH` + archivo clave | `backend/.env.*` | Firma JWT por llave | STAGING/PROD | Montaje read-only desde secreto/volumen seguro | 180 dias | Seguridad |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:21:| S-08 | `VITE_SECRET_KEY` | `frontend/.env` y uso en frontend | Cifrado lado cliente (expuesto en bundle) | DEV/STAGING/PROD | Eliminar del frontend; mover secreto al backend | Inmediata | Frontend + Seguridad |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:23:## 3) Politica institucional de secretos para Docker
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:25:- No versionar secretos en Git (`.env`, claves privadas, certificados productivos).
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:27:- STAGING/PROD: inyectar secretos via `Docker secrets` o vault institucional.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:28:- Todo secreto con trazabilidad de propietario, fecha de creacion y proxima rotacion.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:29:- Cualquier variable `VITE_*` se considera publica; no debe contener secretos reales.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:36:| R-02 | Exposicion de secretos por archivos versionados | Media | Alto | Alto | Ignorar `.env*` y llaves sensibles; mover secretos a mecanismo institucional | PR de hardening + escaneo repo limpio | Seguridad + DevOps | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:37:| R-03 | `VITE_SECRET_KEY` expuesto al cliente | Alta | Alto | Critico | Retirar secreto de frontend y trasladar operacion sensible al backend | Cambio de arquitectura + pruebas funcionales | Frontend + Backend + Seguridad | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:49:- No queden secretos productivos versionados.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:53:- [x] Matriz de secretos levantada sin exponer valores.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\03_Sprint1_Riesgos_Secretos.md:54:- [x] Politica de manejo de secretos definida para Docker.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\04_Sprint1_Validacion_Secuencia_Prerequisitos.md:14:- Inclusiones explicitas de prerequisitos externos previos a STAGING (TLS, DNS/firewall, credenciales CI/CD, registry y ventana de cambio).
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\08_Sprint1_A11_Baseline_Control_Objetivo.md:31:7. `A.2.4.1` Matriz de secretos y estrategia.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\08_Sprint1_A11_Baseline_Control_Objetivo.md:41:  - `A.3.4` Matriz de secretos y plan de migracion.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\08_Sprint1_A11_Baseline_Control_Objetivo.md:51:- `A.4.5` Matriz de secretos con plan de migracion.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\10_Sprint1_Dia2_A221_Inventario_Tecnico.md:114:  - `JWT_SECRET`, `JWT_PRIVATE_KEY_PATH`, `JWT_KID`
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\10_Sprint1_Dia2_A221_Inventario_Tecnico.md:124:3. Existen archivos `.env` con variables sensibles en el repositorio local; debe mantenerse estrategia de secretos fuera de git para STAGING/PROD.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\18_Sprint1_Dia3_A231_Tecnicas_Transversales.md:23:3. Seguridad por defecto: sin secretos en repositorio y con scans automatizados.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\18_Sprint1_Dia3_A231_Tecnicas_Transversales.md:61:### 4.1 Gestion de secretos
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\18_Sprint1_Dia3_A231_Tecnicas_Transversales.md:63:- Secretos fuera del repositorio (`.env` productivo no versionado).
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\18_Sprint1_Dia3_A231_Tecnicas_Transversales.md:65:- Rotacion y trazabilidad definidas en matriz de secretos (paso de Dia 4).
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\20_Sprint1_Dia3_A233_Documento_Stack_Tecnicas_Arquitectura.md:85:- Secretos productivos fuera de repositorio.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:1:# Paso 23 - Sprint 1 - Dia 4 - Catalogo de secretos y estrategia institucional (`A.2.4.1`)
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:8:Catalogar los secretos y variables sensibles del portal para definir una estrategia institucional de manejo en Docker, sin exponer valores.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:16:- hallazgos criticos de exposicion de secretos
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:20:- `docs/migracion/ejecucion/23A_Catalogo_Secretos_20260305_085913.log`
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:22:## 3) Catalogo de secretos y variables sensibles (sin valores)
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:27:| S-02 | `DB_PASSWORD` | Backend | Clave de autenticacion SQL Server | `backend/.env.local`, `backend/.env.production`, `backend/db.ts`, `backend/config/*.ts` | DEV/STAGING/PROD | Secreto critico | Vault institucional + `Docker secrets`/secret mount | 60 dias | DBA + DevOps + Seguridad |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:29:| S-04 | `SMTP_PASS` | Backend | Clave de autenticacion SMTP | `backend/.env.local`, `backend/.env.production`, `backend/controllers/userController.ts`, `backend/testMail.ts` | DEV/STAGING/PROD | Secreto critico | Vault institucional + `Docker secrets`/secret mount | 60 dias | Infra + Seguridad |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:30:| S-05 | `JWT_SECRET` | Backend | Firma y validacion de JWT | `backend/.env.local`, `backend/.env.production`, `backend/controllers/authController.ts`, `backend/middleware/auth.ts` | DEV/STAGING/PROD | Secreto critico | Vault institucional, acceso solo backend, no exposicion en cliente | 30-90 dias | Backend + Seguridad |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:31:| S-06 | `JWT_PRIVATE_KEY_PATH` (+ llave privada) | Backend | Referencia a clave privada para firma | `backend/.env.local`, `backend/.env.production` | STAGING/PROD | Secreto critico (artefacto) | Llave privada fuera de repo, montada readonly desde secreto institucional | 180 dias | Seguridad + DevOps |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:33:| S-08 | `VITE_SECRET_KEY` | Frontend | Clave usada en logica criptografica del cliente | `frontend/.env`, `frontend/src/utils/cryptoUtils.ts` | DEV/STAGING/PROD | Secreto critico expuesto | Eliminar del frontend; mover operacion sensible al backend | Inmediata | Frontend + Backend + Seguridad |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:34:| S-09 | Llaves TLS locales (`*.key`) | Proxy/Infra | Material criptografico TLS | `nginx/certs/localhost.key`, `c1491.key` (workspace local) | DEV/STAGING/PROD | Secreto critico (certificado) | Custodia en sistema institucional de certificados; nunca en repositorio | Segun politica PKI | Infra + Seguridad |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:38:1. Se detecta `VITE_SECRET_KEY` en frontend, lo que implica exposicion del secreto en bundle cliente.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:39:2. Existen secretos criticos definidos en archivos `.env` de backend para entorno productivo.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:40:3. Se referencia `JWT_PRIVATE_KEY_PATH`, pero la llave privada no esta presente en `backend/secrets/es256-priv.pem` en este workspace; debe proveerse por mecanismo institucional.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:46:- Ningun secreto productivo se versiona en Git.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:47:- Ningun secreto via `VITE_*` en frontend.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:48:- Secretos inyectados en runtime (no baked en imagen Docker).
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:49:- Trazabilidad obligatoria por secreto: propietario, fecha de alta, ultima y proxima rotacion.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:57:   - Secretos cargados desde vault institucional o mecanismo equivalente de la plataforma.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:58:   - Backend consume secretos por variables seguras o archivos montados readonly.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:61:   - Prohibido despliegue si existe secreto productivo fuera del mecanismo institucional.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:67:  - Frontend: solo configuracion no secreta.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:69:  - lectura/rotacion/revocacion de secretos
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:74:1. Retirar `VITE_SECRET_KEY` de frontend y migrar criptografia sensible al backend.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:75:2. Sustituir secretos productivos en `.env.production` por inyeccion desde mecanismo institucional.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:76:3. Crear archivos `.env.example` saneados (sin valores secretos) para backend/frontend.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:77:4. Definir plantilla de `docker-compose`/despliegue para consumo de secretos en runtime.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:82:- [x] Catalogo de secretos y variables sensibles levantado sin exponer valores.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md:83:- [x] Estrategia institucional de manejo de secretos definida por entorno.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24A_Registro_Riesgos_Secretos_20260305_090431.log:1:Inicio registro de riesgos de secretos: 2026-03-05T09:04:31.8377744-04:00
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24A_Registro_Riesgos_Secretos_20260305_090431.log:3:Documento base: docs/migracion/ejecucion/23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24A_Registro_Riesgos_Secretos_20260305_090431.log:4:Evidencia tecnica base: docs/migracion/ejecucion/23A_Catalogo_Secretos_20260305_085913.log
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24A_Registro_Riesgos_Secretos_20260305_090431.log:7:- R-01 Exposicion de secreto en frontend por uso de VITE_SECRET_KEY.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24A_Registro_Riesgos_Secretos_20260305_090431.log:8:- R-02 Secretos criticos en archivos .env de backend para entorno productivo.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24A_Registro_Riesgos_Secretos_20260305_090431.log:12:- R-06 Fallback inseguro en frontend (default_secret_key) para logica criptografica.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24A_Registro_Riesgos_Secretos_20260305_090431.log:13:- R-07 Ausencia de gate CI especifico para escaneo de secretos en commit/PR.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24A_Registro_Riesgos_Secretos_20260305_090431.log:14:- R-08 Falta de evidencia automatizada de rotacion por secreto y fecha de vencimiento.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24A_Registro_Riesgos_Secretos_20260305_090431.log:17:- Matriz de secretos consolidada con propietario y rotacion.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23A_Catalogo_Secretos_20260305_085913.log:1:Inicio catalogo secretos: 2026-03-05T08:59:13.1542622-04:00
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23A_Catalogo_Secretos_20260305_085913.log:36:  * JWT_SECRET
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23A_Catalogo_Secretos_20260305_085913.log:72:  * JWT_SECRET
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23A_Catalogo_Secretos_20260305_085913.log:83:  * VITE_SECRET_KEY
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23A_Catalogo_Secretos_20260305_085913.log:115:backend\controllers\authController.ts:22:process.env.JWT_SECRET
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23A_Catalogo_Secretos_20260305_085913.log:149:backend\middleware\auth.ts:45:process.env.JWT_SECRET
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23A_Catalogo_Secretos_20260305_085913.log:164:- JWT_SECRET
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23A_Catalogo_Secretos_20260305_085913.log:178:- Se detecta VITE_SECRET_KEY en frontend/.env (secreto expuesto en bundle).
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23A_Catalogo_Secretos_20260305_085913.log:179:- Se detectan secretos criticos en backend/.env.production (debe migrarse a mecanismo institucional).
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\23A_Catalogo_Secretos_20260305_085913.log:180:- No se detecta backend/secrets/es256-priv.pem en workspace local (validar suministro de clave por secreto institucional).
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:1:# Paso 24 - Sprint 1 - Dia 4 - Evidencia de matriz de secretos y registro de riesgos (`A.2.4.2`)
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:10:- matriz de secretos consolidada
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:15:1. `docs/migracion/ejecucion/23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md`
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:16:2. `docs/migracion/ejecucion/23A_Catalogo_Secretos_20260305_085913.log`
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:17:3. `docs/migracion/ejecucion/24A_Registro_Riesgos_Secretos_20260305_090431.log`
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:19:## 3) Matriz de secretos consolidada (sin valores)
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:24:| S-02 | `DB_PASSWORD` | Backend | DEV/STAGING/PROD | Secreto critico | Vault institucional + `Docker secrets` | 60 dias | DBA + DevOps + Seguridad | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:26:| S-04 | `SMTP_PASS` | Backend | DEV/STAGING/PROD | Secreto critico | Vault institucional + `Docker secrets` | 60 dias | Infra + Seguridad | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:27:| S-05 | `JWT_SECRET` | Backend | DEV/STAGING/PROD | Secreto critico | Vault institucional, acceso exclusivo backend | 30-90 dias | Backend + Seguridad | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:28:| S-06 | `JWT_PRIVATE_KEY_PATH` + llave privada | Backend | STAGING/PROD | Secreto critico (artefacto) | Llave privada externa al repo, montaje readonly | 180 dias | Seguridad + DevOps | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:30:| S-08 | `VITE_SECRET_KEY` | Frontend | DEV/STAGING/PROD | Secreto critico expuesto | Eliminar del frontend y migrar al backend | Inmediata | Frontend + Backend + Seguridad | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:31:| S-09 | `*.key` TLS local | Proxy/Infra | DEV/STAGING/PROD | Secreto critico (certificado) | Custodia institucional de certificados | Segun politica PKI | Infra + Seguridad | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:33:## 4) Registro de riesgos de secretos y configuracion
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:37:| R-01 | Exposicion de secreto en frontend por `VITE_SECRET_KEY` | Alta | Alto | Critico | Retirar secreto del frontend y mover operacion sensible al backend | Frontend + Backend + Seguridad | 2026-03-06 | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:38:| R-02 | Secretos criticos en `.env.production` del backend | Alta | Alto | Critico | Migrar a vault institucional / secretos runtime y limpiar configuracion local | DevOps + Seguridad + Backend | 2026-03-07 | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:42:| R-06 | Fallback inseguro `default_secret_key` en frontend | Alta | Alto | Critico | Eliminar fallback criptografico del cliente y validar ruta backend segura | Frontend + Seguridad | 2026-03-06 | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:43:| R-07 | CI sin gate especifico de escaneo de secretos en commit/PR | Media | Alto | Alto | Integrar escaneo de secretos en pipeline CI con bloqueo por hallazgos criticos | DevOps + Seguridad | 2026-03-10 | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:44:| R-08 | Sin evidencia automatizada de rotacion y vencimiento de secretos | Media | Medio | Medio | Crear bitacora de rotacion y control de expiracion por secreto | Seguridad + Operaciones | 2026-03-12 | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:48:1. Matriz completa de secretos sin exponer valores y con responsables definidos.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:55:- [x] Matriz de secretos consolidada publicada.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25A_Backlog_Decision_GoNoGo_20260305_091327.log:6:- docs/migracion/ejecucion/23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25A_Backlog_Decision_GoNoGo_20260305_091327.log:7:- docs/migracion/ejecucion/24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25A_Backlog_Decision_GoNoGo_20260305_091327.log:11:- BLG-001 Retirar VITE_SECRET_KEY del frontend y migrar logica sensible al backend.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25A_Backlog_Decision_GoNoGo_20260305_091327.log:12:- BLG-002 Migrar secretos criticos de backend/.env.production a vault/secreto runtime.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25A_Backlog_Decision_GoNoGo_20260305_091327.log:15:- BLG-005 Incorporar escaneo de secretos en CI como gate de PR.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25A_Backlog_Decision_GoNoGo_20260305_091327.log:16:- BLG-006 Formalizar bitacora de rotacion y vencimiento de secretos.
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25A_Backlog_Decision_GoNoGo_20260305_091327.log:22:- BLG-012 Validar acceso al registry privado (A.2.5.3).
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25_Sprint1_Dia5_A251_Backlog_Consolidado_Decision_GoNoGo.md:14:3. `docs/migracion/ejecucion/23_Sprint1_Dia4_A241_Catalogo_Secretos_Estrategia_Institucional.md`
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25_Sprint1_Dia5_A251_Backlog_Consolidado_Decision_GoNoGo.md:15:4. `docs/migracion/ejecucion/24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md`
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25_Sprint1_Dia5_A251_Backlog_Consolidado_Decision_GoNoGo.md:22:| BLG-001 | Retirar `VITE_SECRET_KEY` del frontend y migrar la operacion sensible al backend | P0 | Ninguna | Frontend + Backend + Seguridad | 1 dia | Sin secretos en `VITE_*` y prueba funcional OK | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25_Sprint1_Dia5_A251_Backlog_Consolidado_Decision_GoNoGo.md:23:| BLG-002 | Migrar secretos criticos de `backend/.env.production` a mecanismo institucional | P0 | BLG-001 | DevOps + Seguridad + Backend | 1 dia | Variables criticas inyectadas en runtime y fuera de repo | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25_Sprint1_Dia5_A251_Backlog_Consolidado_Decision_GoNoGo.md:26:| BLG-005 | Incorporar escaneo de secretos como gate de PR en CI | P1 | BLG-004 | DevOps + Seguridad | 1 dia | Pipeline falla ante secreto critico detectado | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25_Sprint1_Dia5_A251_Backlog_Consolidado_Decision_GoNoGo.md:27:| BLG-006 | Formalizar bitacora de rotacion de secretos con fecha de vencimiento | P1 | BLG-002 | Seguridad + Operaciones | 0.5 dia | Bitacora publicada con responsables y periodicidad | Abierto |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25_Sprint1_Dia5_A251_Backlog_Consolidado_Decision_GoNoGo.md:33:| BLG-012 | Validar acceso al registry privado (`A.2.5.3`) | P0 | BLG-011 | DevOps | 0.5 dia | Push/pull de prueba exitoso | Pendiente |
+C:\Desarrollo\cnp-docker\docs\migracion\ejecucion\25_Sprint1_Dia5_A251_Backlog_Consolidado_Decision_GoNoGo.md:41:| C2. Sin bloqueadores criticos activos para cierre del Sprint | NO CUMPLE | Persisten riesgos criticos de secretos y aprobaciones pendientes |
+
+[Referencias ventana de cambio]
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\04_Sprint1_Validacion_Secuencia_Prerequisitos.md:14:- Inclusiones explicitas de prerequisitos externos previos a STAGING (TLS, DNS/firewall, credenciales CI/CD, registry y ventana de cambio).
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\08_Sprint1_A11_Baseline_Control_Objetivo.md:19:4. Decisiones de cierre formal del Sprint (incluyendo go/no-go).
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\08_Sprint1_A11_Baseline_Control_Objetivo.md:32:8. `A.2.5.1` Consolidar backlog + decision go/no-go.
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\08_Sprint1_A11_Baseline_Control_Objetivo.md:43:  - `A.3.6` Decision formal go/no-go.
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\18_Sprint1_Dia3_A231_Tecnicas_Transversales.md:15:con lineamientos aplicables a frontend, backend, proxy y pipeline CI/CD.
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\19_Sprint1_Dia3_A232_Topologia_Servicios_Flujos.md:108:- TLS, control de cabeceras y limites de trafico aplicados en edge.
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\22_Sprint1_Dia3_A235_Evidencia_Extensiones_VSCode_Apertura_Workspace.md:8:Registrar evidencia verificable de:
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\24_Sprint1_Dia4_A242_Matriz_Secretos_Registro_Riesgos.md:50:3. Cada riesgo tiene mitigacion verificable y responsable directo.
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\25A_Backlog_Decision_GoNoGo_20260305_091327.log:1:Inicio consolidacion backlog y decision go/no-go: 2026-03-05T09:13:27.9907960-04:00
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\25A_Backlog_Decision_GoNoGo_20260305_091327.log:23:- BLG-013 Confirmar ventana de cambio autorizada para STAGING (A.2.5.3).
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\25_Sprint1_Dia5_A251_Backlog_Consolidado_Decision_GoNoGo.md:1:# Paso 25 - Sprint 1 - Dia 5 - Backlog consolidado y decision go/no-go (`A.2.5.1`)
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\25_Sprint1_Dia5_A251_Backlog_Consolidado_Decision_GoNoGo.md:8:Consolidar el backlog prioritario de cierre de Sprint 1 y emitir una decision formal `go/no-go` basada en riesgos activos y prerequisitos pendientes.
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\25_Sprint1_Dia5_A251_Backlog_Consolidado_Decision_GoNoGo.md:34:| BLG-013 | Confirmar ventana de cambio autorizada para STAGING (`A.2.5.3`) | P0 | Ninguna | Operaciones + Gestion de cambio | 0.5 dia | Ventana registrada y aprobada | Pendiente |
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\25_Sprint1_Dia5_A251_Backlog_Consolidado_Decision_GoNoGo.md:36:## 4) Criterios de decision `go/no-go` evaluados
+C:\Desarrollo\cnp-docker\docs\\migracion\\ejecucion\25_Sprint1_Dia5_A251_Backlog_Consolidado_Decision_GoNoGo.md:52:- [x] Decision formal go/no-go emitida y justificada.

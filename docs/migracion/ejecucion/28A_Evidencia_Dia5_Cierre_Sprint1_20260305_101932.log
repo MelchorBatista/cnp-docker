@@ -1,0 +1,19 @@
+﻿Actualizacion consolidada de evidencia dia 5: 2026-03-05T10:19:32.6878974-04:00
+Punto: A.2.5.4
+
+Incorporaciones de remediacion A.2.5.3:
+- Script mejorado: scripts/migracion/verificar_prerequisitos_externos_staging.ps1
+- Script CI secretos/registry: scripts/migracion/verificar_secretos_ci_registry_staging.ps1
+- Workflow dedicado: .github/workflows/staging-prerequisitos.yml
+- Acta base: docs/migracion/operaciones/Acta_Ventana_Cambio_STAGING.md
+
+Estado actualizado de prerequisitos externos:
+- DNS web/sql: OK
+- Firewall web requerido y SQL 1433: OK
+- CI/CD secrets: PARCIAL (referencias listas, faltan valores)
+- Registry privado: PENDIENTE_EXTERNO
+- Ventana de cambio: PARCIAL (acta creada, falta aprobacion)
+
+Decision:
+- Cierre documental del dia 5: COMPLETO.
+- Cierre operativo STAGING: PENDIENTE.

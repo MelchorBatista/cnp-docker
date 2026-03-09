@@ -1,0 +1,13 @@
+﻿Actualizacion final consolidada dia 5: 2026-03-05T10:21:42.2935493-04:00
+Punto: A.2.5.4
+
+Evidencia vigente A.2.5.3:
+- docs/migracion/ejecucion/27A_Verificacion_Prerequisitos_Externos_STAGING_20260305_102107.log
+- docs/migracion/ejecucion/27B_Verificacion_Secretos_CI_Registry_STAGING_20260305_101807.log
+
+Estado actual:
+- DNS/Firewall web requerido/SQL: OK
+- CI/CD secretos: PARCIAL (workflow listo, valores faltantes)
+- Registry privado: PENDIENTE_EXTERNO
+- Ventana cambio: PARCIAL (acta creada, no aprobada)
+- Resultado general A.2.5.3: BLOQUEADO

@@ -1,0 +1,9 @@
+﻿Inicio instalacion/configuracion VS Code Docker/WSL: 2026-03-05T08:33:43.9710385-04:00
+Directorio de trabajo: C:\Desarrollo\cnp-docker
+CLI VS Code detectado: C:\Program Files\Microsoft VS Code\bin\code.cmd
+{"extension":"Docker","id":"ms-azuretools.vscode-docker","estado_inicial":"No instalada","metodo":"code --install-extension","resultado":"Fallo","codigo":1,"estado_final":"No instalada"}
+{"extension":"Remote - WSL","id":"ms-vscode-remote.remote-wsl","estado_inicial":"No instalada","metodo":"code --install-extension","resultado":"Fallo","codigo":1,"estado_final":"No instalada"}
+{"extension":"ESLint","id":"dbaeumer.vscode-eslint","estado_inicial":"No instalada","metodo":"code --install-extension","resultado":"Fallo","codigo":1,"estado_final":"No instalada"}
+{"extension":"Prettier","id":"esbenp.prettier-vscode","estado_inicial":"No instalada","metodo":"code --install-extension","resultado":"Fallo","codigo":1,"estado_final":"No instalada"}
+{"extension":"GitHub Actions","id":"github.vscode-github-actions","estado_inicial":"No instalada","metodo":"code --install-extension","resultado":"Fallo","codigo":1,"estado_final":"No instalada"}
+Archivo de recomendaciones actualizado: C:\Desarrollo\cnp-docker\.vscode\extensions.json
