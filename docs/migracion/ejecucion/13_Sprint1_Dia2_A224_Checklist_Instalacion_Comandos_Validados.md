@@ -47,22 +47,21 @@ curl --version
 | Herramienta | Version evidenciada | Estado |
 |---|---|---|
 | Git | `git version 2.53.0.windows.1` | OK |
-| Node.js 18 LTS | `v24.14.0` | FALLA (no cumple `v18.x`) |
+| Node.js 24.x | `v24.14.0` | OK |
 | npm | `11.9.0` | OK |
 | OpenSSL | `OpenSSL 3.6.1 27 Jan 2026` | OK |
 | curl | `curl 8.16.0` | OK |
 
 Resultado estacion:
 
-- 4/5 validaciones `OK`.
-- 1/5 `FALLA` (Node.js 18 LTS).
+- 5/5 validaciones `OK`.
 
-### 4.2 Runner de CI (simulacion con Node 18 en PATH)
+### 4.2 Runner de CI (simulacion con Node 24.x en PATH)
 
 | Herramienta | Version evidenciada | Estado |
 |---|---|---|
 | Git | `git version 2.53.0.windows.1` | OK |
-| Node.js 18 LTS | `v18.20.8` | OK |
+| Node.js 24.x | `v24.14.0` | OK |
 | npm | `10.8.2` | OK |
 | OpenSSL | `OpenSSL 3.6.1 27 Jan 2026` | OK |
 | curl | `curl 8.16.0` | OK |
@@ -88,15 +87,16 @@ Workflow asociado:
 
 ## 6) Observaciones y desviaciones
 
-Desviacion abierta:
+Estado actual:
 
-- En la estacion de desarrollo, `node --version` permanece en `v24.14.0`.
-- El cumplimiento de `Node.js 18 LTS` requiere ajuste con privilegios de administrador para reemplazar la instalacion prioritaria actual.
+- El baseline oficial fue actualizado a `Node.js 24.x`.
+- La estacion de desarrollo y la simulacion del runner cumplen ese baseline.
+- No hay desviacion abierta para Node en este punto.
 
-Comando de remediacion documentado:
+Comando de remediacion documentado si una estacion o runner diverge:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\migracion\ajustar_node18_admin.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\migracion\ajustar_node24_admin.ps1
 ```
 
 ## 7) Criterio de cierre de `A.2.2.4`

@@ -27,7 +27,7 @@ Principios aprobados para todo el proyecto:
 
 ### 3.1 Estandar de version y runtime
 
-- Runtime oficial de aplicacion: Node.js 18 LTS (alineado a `engines` del backend y CI).
+- Runtime oficial de aplicacion: Node.js 24.x (alineado a `engines` del backend/frontend y CI).
 - Gestor de paquetes: `npm` con `npm ci` en CI para instalar desde lockfile.
 - Prohibido compilar con versiones no controladas en pipeline oficial.
 

@@ -44,7 +44,7 @@ ORDER BY NombreOrganismo;
 - Requisito de plataforma: `backend/package.json` contiene:
 
 ```json
-"engines": { "node": ">=18.17.0" }
+"engines": { "node": ">=24.0.0 <25" }
 ```
 
 - Compilación y target: `backend/tsconfig.json` con `"target": "ES2020"` y `moduleResolution: "node"`.

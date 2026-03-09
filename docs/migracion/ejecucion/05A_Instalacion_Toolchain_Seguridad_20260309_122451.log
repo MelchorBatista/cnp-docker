@@ -1,0 +1,8 @@
+﻿Inicio de instalacion/verificacion: 2026-03-09T12:24:51.1982343-04:00
+Directorio de trabajo: C:\Desarrollo\cnp-docker
+Solo verificacion: False
+winget disponible: True
+choco disponible: True
+{"herramienta":"Trivy","estado_inicial":"Instalado","metodo":"Ninguno","estado_final":"Instalado","version":"Version: 0.69.3","ruta":"C:\\Users\\dionicio.batista\\AppData\\Local\\Microsoft\\WinGet\\Packages\\AquaSecurity.Trivy_Microsoft.Winget.Source_8wekyb3d8bbwe\\trivy.exe","resultado":"Sin cambios"}
+{"herramienta":"Hadolint","estado_inicial":"Instalado","metodo":"Ninguno","estado_final":"Instalado","version":"winget: 2.14.0","ruta":"C:\\Users\\dionicio.batista\\AppData\\Local\\Microsoft\\WinGet\\Packages\\hadolint.hadolint_Microsoft.Winget.Source_8wekyb3d8bbwe\\hadolint.exe","resultado":"Sin cambios"}
+{"herramienta":"Syft","estado_inicial":"Instalado","metodo":"Ninguno","estado_final":"Instalado","version":"Version: 1.42.1","ruta":"C:\\Users\\dionicio.batista\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Anchore.Syft_Microsoft.Winget.Source_8wekyb3d8bbwe\\syft.exe","resultado":"Sin cambios"}

@@ -1,0 +1,7 @@
+﻿Inicio verificacion WSL/Docker: 2026-03-09T11:40:55.5393057-04:00
+Directorio de trabajo: C:\Desarrollo\cnp-docker
+Comando docker resuelto: C:\Program Files\Docker\Docker\resources\bin\docker.exe
+{"codigo":0,"salida":"Default Distribution: Ubuntu\r\n\r\nDefault Version: 2"}
+{"codigo":0,"salida":"NAME              STATE           VERSION\r\n\r\n* Ubuntu            Stopped         2\r\n\r\n  docker-desktop    Stopped         2"}
+{"codigo":1,"salida":"failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified."}
+[{"verificacion":"wsl --status","codigo":0,"estado":"OK"},{"verificacion":"docker version","codigo":1,"estado":"FALLA"}]

@@ -1,0 +1,15 @@
+﻿Fecha: 2026-03-06T15:24:59.2244413-04:00
+Archivo WSL: C:\Users\dionicio.batista\.wslconfig
+
+[wsl2]
+memory=6GB
+processors=4
+
+Salida relevante de docker info:
+ Operating System: Docker Desktop
+ CPUs: 4
+ Total Memory: 5.788GiB
+ Name: docker-desktop
+
+Nota: en Docker Desktop 4.63.0 con backend WSL2 no se observo control explicito de Disk image size / Disk usage limit en Resources > Advanced; la UI expone Disk image location.
+Ubicacion observada del disco Docker: C:\Users\dionicio.batista\AppData\Local\Docker\wsl

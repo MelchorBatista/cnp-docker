@@ -1,7 +1,7 @@
 ﻿# Paso 1 - Sprint 1 / Dia 1 - Kickoff tecnico
 
 Fecha: 2026-02-24  
-Estado: Ejecutado - pendiente de `Confirmado` del usuario
+Estado: Ejecutado - actualizado con responsables operativos y pendiente de `Confirmado` del usuario
 
 ## 1) Alcance exacto del proyecto (confirmado para este paso)
 
@@ -21,18 +21,18 @@ Estado: Ejecutado - pendiente de `Confirmado` del usuario
 
 ## 2) Matriz de responsables (RACI simplificado)
 
-> Nota: completar nombres reales antes de cerrar Sprint 1.
+> Nota: la matriz queda asignada con responsables operativos iniciales; puede refinarse luego con nombres institucionales adicionales sin invalidar el kickoff.
 
 | Area | Rol | Responsable | Backup | Estado |
 |---|---|---|---|---|
-| Proyecto | Lider tecnico | PENDIENTE | PENDIENTE | Pendiente |
-| Backend/API | Responsable backend | PENDIENTE | PENDIENTE | Pendiente |
-| Frontend | Responsable frontend | PENDIENTE | PENDIENTE | Pendiente |
-| Infraestructura | DevOps/Plataforma | PENDIENTE | PENDIENTE | Pendiente |
-| Seguridad | Seguridad TI | PENDIENTE | PENDIENTE | Pendiente |
-| Redes | Ingenieria de redes | PENDIENTE | PENDIENTE | Pendiente |
-| Base de datos | DBA SQL Server | PENDIENTE | PENDIENTE | Pendiente |
-| Operaciones | Operaciones TI | PENDIENTE | PENDIENTE | Pendiente |
+| Proyecto | Lider tecnico | DIONICIO MELCHOR BATISTA JEREZ | SIN BACKUP DEFINIDO | En progreso |
+| Backend/API | Responsable backend | DIONICIO MELCHOR BATISTA JEREZ | SIN BACKUP DEFINIDO | En progreso |
+| Frontend | Responsable frontend | DIONICIO MELCHOR BATISTA JEREZ | SIN BACKUP DEFINIDO | En progreso |
+| Infraestructura | DevOps/Plataforma | DEPARTAMENTO DE INFRAESTRUCTURA | SIN BACKUP DEFINIDO | En progreso |
+| Seguridad | Seguridad TI | SEGURIDAD TI | SIN BACKUP DEFINIDO | En progreso |
+| Redes | Ingenieria de redes | INGENIERIA DE REDES | SIN BACKUP DEFINIDO | En progreso |
+| Base de datos | DBA SQL Server | DBA SQL SERVER | SIN BACKUP DEFINIDO | En progreso |
+| Operaciones | Operaciones TI | OPERACIONES TI | SIN BACKUP DEFINIDO | En progreso |
 
 ## 3) Flujo de aprobacion de cambios del plan
 
@@ -58,7 +58,7 @@ Estado: Ejecutado - pendiente de `Confirmado` del usuario
 ## 5) Checklist de cierre del paso
 
 - [x] Se definio el alcance exacto (incluye/no incluye).
-- [x] Se dejo matriz de responsables para completar.
+- [x] Se dejo matriz de responsables operativa.
 - [x] Se definio flujo de aprobacion.
 - [x] Se genero evidencia documental del paso.
 - [ ] Pendiente confirmacion del usuario para marcar el paso con `//`.

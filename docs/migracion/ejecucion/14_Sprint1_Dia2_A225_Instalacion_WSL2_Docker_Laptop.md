@@ -85,6 +85,37 @@ Nota operativa:
 
 - En sesiones antiguas de terminal puede no resolverse `docker` por PATH hasta abrir una nueva sesion.
 
+## 7.1) Ajuste posterior de recursos para laptop objetivo
+
+Para alinear el uso local de Docker Desktop con el baseline operativo de la migracion:
+
+- se creo el archivo `%USERPROFILE%\\.wslconfig`
+- contenido aplicado:
+
+```ini
+[wsl2]
+memory=6GB
+processors=4
+```
+
+Pendiente operativo para completar el punto:
+
+- ejecutar `wsl --shutdown`
+- reiniciar Docker Desktop
+- revalidar con `docker info`
+
+Resultado esperado posterior:
+
+- `NCPU`: `4`
+- `MemTotal`: cercano a `6 GiB`
+
+Nota de plataforma:
+
+- en Docker Desktop `4.63.0` con backend `WSL2`, la UI observada en esta laptop expone configuracion de CPU y memoria mediante `.wslconfig`
+- la seccion `Resources -> Advanced` muestra `Disk image location`, pero no expone en esta instalacion un control directo verificable de `Disk image size` / `Disk usage limit`
+- por esa razon, el almacenamiento queda documentado como administrado por Docker Desktop en modo WSL2, manteniendo trazabilidad sobre la ubicacion del disco en:
+  - `C:\Users\dionicio.batista\AppData\Local\Docker\wsl`
+
 ## 8) Cierre del punto `A.2.2.5`
 
 - [x] Flujo de instalacion ejecutado y evidenciado.

@@ -30,6 +30,23 @@ function Obtener-RaizProyecto {
     }
 }
 
+function Obtener-RutaCodeCli {
+    $comandosPreferidos = @("code.cmd", "code")
+    foreach ($nombre in $comandosPreferidos) {
+        $comando = Get-Command $nombre -ErrorAction SilentlyContinue
+        if ($comando) {
+            return $comando.Source
+        }
+    }
+
+    $rutaCodeCmd = Join-Path ${env:ProgramFiles} "Microsoft VS Code\\bin\\code.cmd"
+    if (Test-Path $rutaCodeCmd) {
+        return $rutaCodeCmd
+    }
+
+    return $null
+}
+
 function Es-ExtensionInstalada {
     param(
         [Parameter(Mandatory = $true)]
@@ -95,15 +112,15 @@ $extensionesObjetivo = @(
 "Inicio instalacion/configuracion VS Code Docker/WSL: $(Get-Date -Format o)" | Out-File -FilePath $rutaLog -Encoding UTF8
 "Directorio de trabajo: $raizProyecto" | Out-File -FilePath $rutaLog -Encoding UTF8 -Append
 
-$comandoCode = Get-Command code -ErrorAction SilentlyContinue
-if (-not $comandoCode) {
+$rutaCodeCli = Obtener-RutaCodeCli
+if (-not $rutaCodeCli) {
     "CLI de VS Code no encontrado (code)." | Out-File -FilePath $rutaLog -Encoding UTF8 -Append
     Write-Error "No se encontro el comando 'code'."
     exit 1
 }
 
-$script:RutaCodeCli = $comandoCode.Source
-"CLI VS Code detectado: $($comandoCode.Source)" | Out-File -FilePath $rutaLog -Encoding UTF8 -Append
+$script:RutaCodeCli = $rutaCodeCli
+"CLI VS Code detectado: $rutaCodeCli" | Out-File -FilePath $rutaLog -Encoding UTF8 -Append
 
 $resultados = foreach ($extension in $extensionesObjetivo) {
     $instaladaInicial = Es-ExtensionInstalada -Identificador $extension.id

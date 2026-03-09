@@ -228,9 +228,9 @@ $herramientasObjetivo = @(
         PaquetesChocolatey = @("git")
     },
     @{
-        Nombre = "Node.js 18 LTS"
+        Nombre = "Node.js 24.x"
         Comando = "node"
-        PatronVersionObjetivo = "^v18\."
+        PatronVersionObjetivo = "^v24\."
         Provision = "actions/setup-node@v4"
         IdsWinget = @()
         PaquetesChocolatey = @()

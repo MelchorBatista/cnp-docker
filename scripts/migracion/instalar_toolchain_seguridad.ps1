@@ -6,6 +6,9 @@ param(
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
+if (Get-Variable PSNativeCommandUseErrorActionPreference -ErrorAction SilentlyContinue) {
+    $PSNativeCommandUseErrorActionPreference = $false
+}
 
 function Obtener-RaizProyecto {
     param(
@@ -48,8 +51,22 @@ function Obtener-VersionHerramienta {
         $ejecutable = if ($RutaEjecutable) { $RutaEjecutable } else { $Comando }
         switch ($Comando) {
             "trivy" { return (& $ejecutable --version 2>$null | Select-Object -First 1) }
-            "hadolint" { return (& $ejecutable --version 2>$null | Select-Object -First 1) }
-            "syft" { return (& $ejecutable version 2>$null | Select-Object -First 1) }
+            "hadolint" {
+                $salidaWinget = (& winget list --id hadolint.hadolint 2>$null | Out-String)
+                if ($LASTEXITCODE -eq 0 -and $salidaWinget -match "(?im)^.*\bhadolint\.hadolint\s+([0-9][^\s]*)\s+winget\s*$") {
+                    return "winget: $($Matches[1])"
+                }
+
+                return "Version no disponible"
+            }
+            "syft" {
+                $salidaSyft = (& $ejecutable version 2>$null | Out-String).Trim()
+                if ($salidaSyft -match "(?im)^Version:\s*(.+)$") {
+                    return "Version: $($Matches[1].Trim())"
+                }
+
+                return ($salidaSyft -split "`r?`n" | Select-Object -First 1)
+            }
             default { return "Version no configurada para $Comando" }
         }
     }
@@ -148,13 +165,34 @@ function Intentar-InstalacionWinget {
     return $false
 }
 
+function Asegurar-Chocolatey {
+    if (Es-ComandoDisponible -Comando "choco") {
+        return $true
+    }
+
+    if (-not (Es-ComandoDisponible -Comando "winget")) {
+        return $false
+    }
+
+    Write-Host "[winget] Chocolatey no encontrado. Intentando instalar Chocolatey..."
+    & winget install --id Chocolatey.Chocolatey --exact --silent --accept-package-agreements --accept-source-agreements --disable-interactivity
+    $codigoSalida = $LASTEXITCODE
+
+    Refrescar-PathProceso
+    if ($codigoSalida -ne 0) {
+        return $false
+    }
+
+    return (Es-ComandoDisponible -Comando "choco")
+}
+
 function Intentar-InstalacionChocolatey {
     param(
         [Parameter(Mandatory = $true)]
         [hashtable]$Herramienta
     )
 
-    if (-not (Es-ComandoDisponible -Comando "choco")) {
+    if (-not (Asegurar-Chocolatey)) {
         return $false
     }
 

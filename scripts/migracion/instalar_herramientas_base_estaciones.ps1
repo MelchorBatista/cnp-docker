@@ -263,11 +263,11 @@ $herramientasObjetivo = @(
         PaquetesChocolatey = @("git")
     },
     @{
-        Nombre = "Node.js 18 LTS"
+        Nombre = "Node.js 24.x"
         Comando = "node"
-        PatronVersionObjetivo = "^v18\."
-        DescripcionObjetivo = "Version principal 18.x"
-        IdsWinget = @("OpenJS.NodeJS.18")
+        PatronVersionObjetivo = "^v24\."
+        DescripcionObjetivo = "Version principal 24.x"
+        IdsWinget = @("OpenJS.NodeJS.LTS")
         PaquetesChocolatey = @("nodejs-lts")
     },
     @{
@@ -275,7 +275,7 @@ $herramientasObjetivo = @(
         Comando = "npm.cmd"
         PatronVersionObjetivo = ""
         DescripcionObjetivo = "Disponible en PATH."
-        IdsWinget = @("OpenJS.NodeJS.18")
+        IdsWinget = @("OpenJS.NodeJS.LTS")
         PaquetesChocolatey = @("nodejs-lts")
     },
     @{

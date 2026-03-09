@@ -1,5 +1,8 @@
 name: CI
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build-and-test:
@@ -15,7 +18,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '24'
       - name: Install
         run: |
           cd backend
@@ -32,3 +35,57 @@ jobs:
         run: |
           cd backend
           npm audit --audit-level=moderate || true
+
+  baseline-toolchain-runner-ci:
+    name: Baseline Toolchain Runner CI (A.2.2.3)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Instalar herramientas base del runner
+        shell: powershell
+        run: |
+          powershell -ExecutionPolicy Bypass -File .\scripts\migracion\instalar_herramientas_base_runner_ci.ps1
+      - name: Verificar herramientas base del runner
+        shell: powershell
+        run: |
+          powershell -ExecutionPolicy Bypass -File .\scripts\migracion\verificar_herramientas_base_runner_ci.ps1
+      - name: Publicar evidencia A.2.2.3
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidencia-a223-herramientas-base-runner-ci
+          path: |
+            docs/migracion/ejecucion/11C_Instalacion_Herramientas_Base_Runner_CI_*.log
+            docs/migracion/ejecucion/11D_Verificacion_Herramientas_Base_Runner_CI_*.log
+
+  security-toolchain-runner-ci:
+    name: Security Toolchain Runner CI (A.2.2.7-A.2.2.8)
+    runs-on: windows-latest
+    needs:
+      - baseline-toolchain-runner-ci
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Instalar toolchain de seguridad
+        shell: powershell
+        run: |
+          powershell -ExecutionPolicy Bypass -File .\scripts\migracion\instalar_toolchain_seguridad.ps1
+      - name: Verificar toolchain de seguridad
+        shell: powershell
+        run: |
+          powershell -ExecutionPolicy Bypass -File .\scripts\migracion\verificar_toolchain_seguridad.ps1
+      - name: Publicar evidencia A.2.2.7-A.2.2.8
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidencia-a227-toolchain-seguridad-runner-ci
+          path: |
+            docs/migracion/ejecucion/05A_Instalacion_Toolchain_Seguridad_*.log
+            docs/migracion/ejecucion/05B_Verificacion_Toolchain_Seguridad_*.log

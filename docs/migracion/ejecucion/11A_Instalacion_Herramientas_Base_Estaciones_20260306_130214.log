@@ -1,0 +1,10 @@
+﻿Inicio de instalacion/verificacion: 2026-03-06T13:02:14.8255579-04:00
+Directorio de trabajo: C:\Desarrollo\cnp-docker
+Solo verificacion: False
+winget disponible: True
+choco disponible (inicio): True
+{"herramienta":"Git","comando":"git","objetivo":"Disponible en PATH.","estado_inicial":"Cumple","version_inicial":"git version 2.53.0.windows.1","ruta_inicial":"C:\\Program Files\\Git\\cmd\\git.exe","metodo":"Ninguno","resultado":"Sin cambios","estado_final":"Cumple","version_final":"git version 2.53.0.windows.1","ruta_final":"C:\\Program Files\\Git\\cmd\\git.exe"}
+{"herramienta":"Node.js 24.x","comando":"node","objetivo":"Version principal 24.x","estado_inicial":"Cumple","version_inicial":"v24.14.0","ruta_inicial":"C:\\Program Files\\nodejs\\node.exe","metodo":"Ninguno","resultado":"Sin cambios","estado_final":"Cumple","version_final":"v24.14.0","ruta_final":"C:\\Program Files\\nodejs\\node.exe"}
+{"herramienta":"npm","comando":"npm.cmd","objetivo":"Disponible en PATH.","estado_inicial":"Cumple","version_inicial":"11.9.0","ruta_inicial":"C:\\Program Files\\nodejs\\npm.cmd","metodo":"Ninguno","resultado":"Sin cambios","estado_final":"Cumple","version_final":"11.9.0","ruta_final":"C:\\Program Files\\nodejs\\npm.cmd"}
+{"herramienta":"OpenSSL","comando":"openssl","objetivo":"Comando funcional en PATH.","estado_inicial":"Cumple","version_inicial":"OpenSSL 3.6.1 27 Jan 2026 (Library: OpenSSL 3.6.1 27 Jan 2026)","ruta_inicial":"C:\\Program Files\\OpenSSL-Win64\\bin\\openssl.exe","metodo":"Ninguno","resultado":"Sin cambios","estado_final":"Cumple","version_final":"OpenSSL 3.6.1 27 Jan 2026 (Library: OpenSSL 3.6.1 27 Jan 2026)","ruta_final":"C:\\Program Files\\OpenSSL-Win64\\bin\\openssl.exe"}
+{"herramienta":"curl","comando":"curl.exe","objetivo":"Comando funcional en PATH.","estado_inicial":"Cumple","version_inicial":"curl 8.16.0 (Windows) libcurl/8.16.0 Schannel zlib/1.3.1 WinIDN","ruta_inicial":"C:\\windows\\system32\\curl.exe","metodo":"Ninguno","resultado":"Sin cambios","estado_final":"Cumple","version_final":"curl 8.16.0 (Windows) libcurl/8.16.0 Schannel zlib/1.3.1 WinIDN","ruta_final":"C:\\windows\\system32\\curl.exe"}

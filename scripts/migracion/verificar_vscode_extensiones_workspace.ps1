@@ -30,6 +30,23 @@ function Obtener-RaizProyecto {
     }
 }
 
+function Obtener-RutaCodeCli {
+    $comandosPreferidos = @("code.cmd", "code")
+    foreach ($nombre in $comandosPreferidos) {
+        $comando = Get-Command $nombre -ErrorAction SilentlyContinue
+        if ($comando) {
+            return $comando.Source
+        }
+    }
+
+    $rutaCodeCmd = Join-Path ${env:ProgramFiles} "Microsoft VS Code\\bin\\code.cmd"
+    if (Test-Path $rutaCodeCmd) {
+        return $rutaCodeCmd
+    }
+
+    return $null
+}
+
 function Ejecutar-CodeComando {
     param(
         [Parameter(Mandatory = $true)]
@@ -62,13 +79,13 @@ New-Item -ItemType Directory -Path $directorioReporte -Force | Out-Null
 $marcaTiempo = Get-Date -Format "yyyyMMdd_HHmmss"
 $rutaLog = Join-Path $directorioReporte ("21B_Verificacion_VSCode_Extensiones_Workspace_{0}.log" -f $marcaTiempo)
 
-$comandoCode = Get-Command code -ErrorAction SilentlyContinue
-if (-not $comandoCode) {
+$rutaCodeCli = Obtener-RutaCodeCli
+if (-not $rutaCodeCli) {
     Write-Error "No se encontro el comando 'code'."
     exit 1
 }
 
-$rutaCode = $comandoCode.Source
+$rutaCode = $rutaCodeCli
 
 $extensionesRequeridas = @(
     "ms-azuretools.vscode-docker",

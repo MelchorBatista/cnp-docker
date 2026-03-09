@@ -3,6 +3,18 @@
 set -eu
 
 ARCHIVO_CRITICO="Migracion_Docker.js"
+ARCHIVO_UTF8="Migracion_Docker.ini"
+
+if command -v pwsh >/dev/null 2>&1; then
+  POWERSHELL_BIN="pwsh"
+elif command -v powershell.exe >/dev/null 2>&1; then
+  POWERSHELL_BIN="powershell.exe"
+elif command -v powershell >/dev/null 2>&1; then
+  POWERSHELL_BIN="powershell"
+else
+  echo "ERROR: No se encontro PowerShell para validar ${ARCHIVO_UTF8}."
+  exit 1
+fi
 
 if git diff --cached --name-status | grep -Eq "^D[[:space:]]+${ARCHIVO_CRITICO}$"; then
   echo "ERROR: No se permite eliminar ${ARCHIVO_CRITICO}."
@@ -12,4 +24,8 @@ fi
 if ! git ls-files --error-unmatch "${ARCHIVO_CRITICO}" >/dev/null 2>&1; then
   echo "ERROR: El repositorio debe contener ${ARCHIVO_CRITICO}."
   exit 1
+fi
+
+if git diff --cached --name-only --diff-filter=ACMR | grep -Eq "^${ARCHIVO_UTF8}$"; then
+  "${POWERSHELL_BIN}" -NoProfile -ExecutionPolicy Bypass -File "scripts/migracion/verificar_codificacion_utf8.ps1" -Path "${ARCHIVO_UTF8}"
 fi

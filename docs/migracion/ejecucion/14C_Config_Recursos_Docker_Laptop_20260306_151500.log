@@ -1,0 +1,9 @@
+﻿Fecha: 2026-03-06T15:12:37.1217838-04:00
+Archivo: C:\Users\dionicio.batista\.wslconfig
+
+[wsl2]
+memory=6GB
+processors=4
+
+Pendiente manual: ajustar disco Docker Desktop a 80 GB en Settings > Resources > Advanced
+Pendiente manual: ejecutar wsl --shutdown y reiniciar Docker Desktop para que apliquen CPU/RAM

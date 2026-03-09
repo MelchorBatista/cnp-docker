@@ -35,7 +35,7 @@ Aprobar una referencia oficial unica para el proyecto que incluya:
 
 | Componente | Estandar oficial | Version objetivo |
 | --- | --- | --- |
-| Runtime backend/frontend | Node.js LTS | 18.x (minimo `>=18.17.0`) |
+| Runtime backend/frontend | Node.js LTS aprobada actual | 24.x (rango `>=24.0.0 <25`) |
 | Lenguaje backend/frontend | TypeScript | 5.x |
 | Frontend | React | 18.x |
 | Build frontend | Vite | 6.x |
@@ -101,10 +101,10 @@ curl --version
 
 Nota operativa:
 
-- Si `node --version` no devuelve `v18.x`, ejecutar remediacion administrativa:
+- Si `node --version` no devuelve `v24.x`, ejecutar remediacion administrativa:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\migracion\ajustar_node18_admin.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\migracion\ajustar_node24_admin.ps1
 ```
 
 ### 4.1.2 Toolchain de seguridad
@@ -195,7 +195,7 @@ Resultado de evaluacion:
 
 - Catalogo oficial: `APROBADO`.
 - Guia de instalacion completa: `APROBADA`.
-- Nota de cumplimiento: el ajuste local a Node 18 en estaciones con Node 24 se mantiene como remediacion operativa obligatoria.
+- Nota de cumplimiento: la politica oficial del proyecto queda alineada a `Node.js 24.x`; cualquier estacion o runner fuera de ese rango requiere remediacion administrativa documentada.
 
 ## 6) Resultado del punto `A.2.5.2`
 

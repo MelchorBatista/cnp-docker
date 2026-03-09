@@ -69,7 +69,7 @@ const testConnectionsLimiter = rateLimit({
 ## 4) `backend/package.json` — engines y scripts
 
 ```json
-"engines": { "node": ">=18.17.0" }
+"engines": { "node": ">=24.0.0 <25" }
 
 "scripts": {
   "typecheck": "tsc --noEmit -p tsconfig.json",

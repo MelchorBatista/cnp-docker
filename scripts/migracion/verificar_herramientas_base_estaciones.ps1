@@ -202,10 +202,10 @@ $herramientasObjetivo = @(
         DescripcionObjetivo = "Disponible en PATH."
     },
     @{
-        Nombre = "Node.js 18 LTS"
+        Nombre = "Node.js 24.x"
         Comando = "node"
-        PatronVersionObjetivo = "^v18\."
-        DescripcionObjetivo = "Version principal 18.x"
+        PatronVersionObjetivo = "^v24\."
+        DescripcionObjetivo = "Version principal 24.x"
     },
     @{
         Nombre = "npm"

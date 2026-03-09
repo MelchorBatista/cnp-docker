@@ -1,7 +1,7 @@
 # Paso 22 - Sprint 1 - Dia 3 - Evidencia de extensiones VS Code y apertura de workspace (`A.2.3.5`)
 
 Fecha: 2026-03-05  
-Estado: Ejecutado - Pendiente de confirmacion del usuario
+Estado: Ejecutado - Confirmado por el usuario (2026-03-05)
 
 ## 1) Objetivo del paso
 
@@ -57,5 +57,5 @@ Nota de trazabilidad:
 - [x] Apertura de workspace registrada sin errores.
 - [x] Estado de instancia VS Code registrado con `Workspace Stats`.
 - [x] Evidencia en log de ejecucion almacenada en `docs/migracion/ejecucion`.
-- [ ] Confirmacion del usuario pendiente para marcar `A.2.3.5` con `//`.
+- [x] `Confirmado` del usuario recibido y `A.2.3.5` marcado en el plan.
 

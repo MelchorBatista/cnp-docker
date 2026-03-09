@@ -1,0 +1,23 @@
+Actualizacion formal decision go/no-go: 2026-03-06T14:05:20-04:00
+Punto del plan: A.3.6
+
+Decision previa referenciada:
+- docs/migracion/ejecucion/25_Sprint1_Dia5_A251_Backlog_Consolidado_Decision_GoNoGo.md
+- Estado historico: NO-GO TEMPORAL
+
+Remediaciones verificadas desde la decision previa:
+- Topologia SQL separada y validada para VALIDACION / CONSULTA / RECEPCION.
+- Prerrequisitos locales de Docker, WSL y SQL validados.
+- Conectividad desde Docker/WSL hacia hosts SQL validada.
+- Baseline Node actualizado y alineado a 24.x.
+- Evidencia documental obligatoria de Sprint 1 restaurada y trazable.
+
+Riesgos residuales aceptados:
+- CONSULTA es solo lectura por diseno de aplicacion, no por restriccion SQL dedicada.
+- Despliegue en c1491 continua fuera de Sprint 1.
+- Observacion futura de confianza TLS/CA en contenedores Alpine.
+
+Decision supersedente:
+- Estado actual Sprint 1: GO.
+- Alcance: cerrar Sprint A e iniciar Sprint B tras cierre del bloque A.
+- No habilita despliegue STAGING ni promocion a PRODUCCION.

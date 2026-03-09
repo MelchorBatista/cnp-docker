@@ -51,7 +51,7 @@ Documentos base usados para integracion:
 ### 3.2 Toolchain base
 
 - Git
-- Node.js 18 LTS (objetivo operativo)
+- Node.js 24.x (baseline operativo aprobada actual)
 - npm
 - OpenSSL
 - curl
@@ -74,7 +74,7 @@ Documentos base usados para integracion:
 
 ### 4.1 Build
 
-- Runtime de referencia en CI: Node.js 18.
+- Runtime de referencia en CI: Node.js 24.
 - Instalacion deterministica en CI: `npm ci`.
 - Compilacion backend: `npm run typecheck` + `npm run build`.
 - Compilacion frontend: `npm run build`.
@@ -161,7 +161,7 @@ Pendientes de sprint para completar Dia 3:
 1. Nginx actual del repo no implementa aun proxy para `/api` y `/socket.io`.
 2. `nginx.conf` vigente usa rutas absolutas Windows no portables a contenedor.
 3. Divergencia historica de Socket.IO (`/cnp/socket.io` vs `/socket.io`) requiere regla de compatibilidad en proxy.
-4. Alineacion estricta de Node 18 en todas las estaciones debe mantenerse como politica activa.
+4. Alineacion estricta de Node 24.x en todas las estaciones y en CI debe mantenerse como politica activa.
 
 ## 8) Decisiones vinculantes registradas
 

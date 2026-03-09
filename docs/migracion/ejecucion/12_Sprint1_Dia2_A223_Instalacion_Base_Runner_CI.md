@@ -8,7 +8,7 @@ Estado: Ejecutado - Confirmado por el usuario (2026-03-04)
 Ejecutar instalacion base de herramientas en runner de CI para validar:
 
 - Git
-- Node.js 18 LTS
+- Node.js 24.x
 - npm
 - OpenSSL
 - curl
@@ -27,7 +27,7 @@ Ambos scripts:
 - Registran logs en `docs/migracion/ejecucion`.
 - Evalua version objetivo de herramientas.
 - Ejecutan doble verificacion (sesion actual + sesion nueva + PATH).
-- Mantienen compatibilidad con `actions/setup-node@v4` para Node 18 LTS.
+- Mantienen compatibilidad con `actions/setup-node@v4` para Node 24.x.
 
 ### Workflow CI actualizado
 
@@ -38,14 +38,14 @@ Cambios:
 - Se agrega trigger `workflow_dispatch`.
 - Se agrega job `baseline-toolchain-runner-ci` en `windows-latest`.
 - El job ejecuta en secuencia:
-  1. `actions/setup-node@v4` con `node-version: '18'`.
+  1. `actions/setup-node@v4` con `node-version: '24'`.
   2. Script de instalacion base (`11C`).
   3. Script de verificacion base (`11D`).
   4. Publicacion de logs como artifact (`actions/upload-artifact@v4`).
 
 ## 3) Ejecucion realizada
 
-### Validacion local de scripts (simulando runner con Node 18 en PATH)
+### Validacion local de scripts (simulando runner con Node 24.x en PATH)
 
 Comandos ejecutados:
 
@@ -60,7 +60,7 @@ Resultado:
 - Verificacion doble: `OK`
 - Herramientas en estado `Cumple/OK` durante simulacion:
   - Git
-  - Node.js 18 LTS
+  - Node.js 24.x
   - npm
   - OpenSSL
   - curl
@@ -68,9 +68,9 @@ Resultado:
 ## 4) Evidencia de logs
 
 - Instalacion runner CI (simulacion):
-  - `docs/migracion/ejecucion/11C_Instalacion_Herramientas_Base_Runner_CI_20260304_174739.log`
+  - `docs/migracion/ejecucion/11C_Instalacion_Herramientas_Base_Runner_CI_20260306_130215.log`
 - Verificacion runner CI (simulacion):
-  - `docs/migracion/ejecucion/11D_Verificacion_Herramientas_Base_Runner_CI_20260304_174749.log`
+  - `docs/migracion/ejecucion/11D_Verificacion_Herramientas_Base_Runner_CI_20260306_130214.log`
 
 ## 5) Verificacion pendiente en runner remoto
 

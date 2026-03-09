@@ -1,0 +1,8 @@
+root = true
+
+[*.{ini,md,txt,json,yml,yaml,ps1,psm1,psd1,js,jsx,ts,tsx,css,scss,html,sh}]
+charset = utf-8
+insert_final_newline = true
+
+[Migracion_Docker.ini]
+charset = utf-8

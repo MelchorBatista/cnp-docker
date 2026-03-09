@@ -183,7 +183,7 @@ $rutaLog = Join-Path $directorioReporte ("11D_Verificacion_Herramientas_Base_Run
 
 $herramientasObjetivo = @(
     @{ Nombre = "Git"; Comando = "git"; PatronVersionObjetivo = "^git version "; ValidarPathSistema = $true },
-    @{ Nombre = "Node.js 18 LTS"; Comando = "node"; PatronVersionObjetivo = "^v18\."; ValidarPathSistema = $false },
+    @{ Nombre = "Node.js 24.x"; Comando = "node"; PatronVersionObjetivo = "^v24\."; ValidarPathSistema = $false },
     @{ Nombre = "npm"; Comando = "npm.cmd"; PatronVersionObjetivo = "^\d+\."; ValidarPathSistema = $false },
     @{ Nombre = "OpenSSL"; Comando = "openssl"; PatronVersionObjetivo = "^OpenSSL "; ValidarPathSistema = $true },
     @{ Nombre = "curl"; Comando = "curl.exe"; PatronVersionObjetivo = "^curl "; ValidarPathSistema = $true }
