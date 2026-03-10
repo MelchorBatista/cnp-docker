@@ -1,0 +1,98 @@
+server {
+    listen 80;
+    server_name _;
+
+    client_max_body_size 64m;
+
+    location = /healthz {
+        add_header Content-Type text/plain;
+        return 200 'ok';
+    }
+
+    location = / {
+        return 302 ${PROXY_BASE_PATH}/;
+    }
+
+    location = ${PROXY_BASE_PATH} {
+        return 301 ${PROXY_BASE_PATH}/;
+    }
+
+    location ${PROXY_BASE_PATH}/ {
+        proxy_pass ${PROXY_FRONTEND_UPSTREAM};
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+    }
+
+    location = ${PROXY_API_PREFIX} {
+        proxy_pass ${PROXY_BACKEND_UPSTREAM};
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+    }
+
+    location ${PROXY_API_PREFIX}/ {
+        proxy_pass ${PROXY_BACKEND_UPSTREAM};
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+    }
+
+    location = ${PROXY_SOCKETIO_PATH} {
+        proxy_pass ${PROXY_BACKEND_UPSTREAM};
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+    }
+
+    location ${PROXY_SOCKETIO_PATH}/ {
+        proxy_pass ${PROXY_BACKEND_UPSTREAM};
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+    }
+
+    location = ${PROXY_SOCKETIO_COMPAT_PATH} {
+        proxy_pass ${PROXY_BACKEND_UPSTREAM}${PROXY_SOCKETIO_PATH};
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+    }
+
+    location ${PROXY_SOCKETIO_COMPAT_PATH}/ {
+        rewrite ^${PROXY_SOCKETIO_COMPAT_PATH}(.*)$ ${PROXY_SOCKETIO_PATH}$1 break;
+        proxy_pass ${PROXY_BACKEND_UPSTREAM};
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+    }
+}

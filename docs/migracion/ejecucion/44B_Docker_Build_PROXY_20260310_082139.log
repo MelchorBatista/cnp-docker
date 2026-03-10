@@ -1,0 +1,46 @@
+docker : #0 building with "desktop-linux" instance using docker driver
+At C:\Desarrollo\cnp-docker\scripts\migracion\ejecutar_pipeline_base_docker_dev_ci.ps1:319 char:51
++ ... esultadoBuild = Ejecutar-Comando -Comando { docker @argumentosBuild }
++                                                 ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (#0 building wit...g docker driver:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 895B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#2 DONE 0.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 43B done
+#4 DONE 0.0s
+
+#5 [1/2] FROM 
+docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#5 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 
+0.0s done
+#5 DONE 0.0s
+
+#6 [2/2] COPY default.conf.template /etc/nginx/templates/default.conf.template
+#6 CACHED
+
+#7 exporting to image
+#7 exporting layers done
+#7 exporting manifest sha256:9c5bfa52f787e131afd0115deada2816abbfaf025c70883183e538fd8955c5c1 done
+#7 exporting config sha256:c4377b4d9c0914672d6b98ca77e7433a93820e1e5ffbe62d30ba243f8d87f15a 0.0s done
+#7 exporting attestation manifest sha256:72a6e21c680d661eac3a1062f00f39b169aae7c5346bf8120a7ddbc0546a565c 0.0s done
+#7 exporting manifest list sha256:c12019b694e4ab8a0c91053c507191b630d7b7fe7bc5fbae58e0ebc91a239ff8
+#7 exporting manifest list sha256:c12019b694e4ab8a0c91053c507191b630d7b7fe7bc5fbae58e0ebc91a239ff8 done
+#7 naming to docker.io/library/cnp-proxy:sha-97e66a7 done
+#7 unpacking to docker.io/library/cnp-proxy:sha-97e66a7 0.0s done
+#7 naming to docker.io/library/cnp-proxy:dev done
+#7 unpacking to docker.io/library/cnp-proxy:dev 0.0s done
+#7 DONE 0.2s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/67rwbsrx10ezuu2j57h4t9xak

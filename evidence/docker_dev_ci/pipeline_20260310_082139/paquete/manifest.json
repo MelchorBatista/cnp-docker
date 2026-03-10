@@ -1,0 +1,93 @@
+{
+    "fecha":  "2026-03-10T08:22:25",
+    "directorioSalida":  "C:\\Desarrollo\\cnp-docker\\evidence\\docker_dev_ci\\pipeline_20260310_082139\\paquete",
+    "algoritmoChecksum":  "SHA256",
+    "notaChecksums":  "checksums.sha256 incluye imagenes exportadas, reportes y manifest.json; no se auto-firma para evitar referencia circular.",
+    "imagenes":  [
+                     {
+                         "nombre":  "backend",
+                         "categoria":  "imagen",
+                         "archivo":  "cnp-backend.tar",
+                         "sha256":  "A4B5F9A88FFC29F8960EC9DD0AFE1E337C9A53D37067A2798BA1F02B1A17931A",
+                         "tamanoBytes":  96866816,
+                         "etiqueta":  "cnp-backend:sha-97e66a7",
+                         "digest":  "sha256:53070b271086bf319767461bfa5599600db2f9da6135d74116d84364b581579d"
+                     },
+                     {
+                         "nombre":  "frontend",
+                         "categoria":  "imagen",
+                         "archivo":  "cnp-frontend.tar",
+                         "sha256":  "735D6A9F21811A8FC65C341C125D1FA202B97D70FFB7BC5296472C34A7022732",
+                         "tamanoBytes":  21351936,
+                         "etiqueta":  "cnp-frontend:sha-97e66a7",
+                         "digest":  "sha256:b6b194b22dfaeb63e60172be6337548c86536bb92989579dfcd8a5597b9e5c2f"
+                     },
+                     {
+                         "nombre":  "proxy",
+                         "categoria":  "imagen",
+                         "archivo":  "cnp-proxy.tar",
+                         "sha256":  "30F31F413B3FFBCAE8C0019DF0E0528004D460953D4CA452096A48A2360FFE18",
+                         "tamanoBytes":  20996608,
+                         "etiqueta":  "cnp-proxy:sha-97e66a7",
+                         "digest":  "sha256:c12019b694e4ab8a0c91053c507191b630d7b7fe7bc5fbae58e0ebc91a239ff8"
+                     }
+                 ],
+    "archivos":  [
+                     {
+                         "nombre":  "entorno-ejemplo",
+                         "categoria":  "configuracion",
+                         "archivo":  "backend.env.example",
+                         "sha256":  "BA4555E9DD58BF8C4C818EB2889D8054FC5D0C46B5B8D3DCC93CC93890A1F060",
+                         "tamanoBytes":  2391
+                     },
+                     {
+                         "nombre":  "estandar-imagenes-versionado",
+                         "categoria":  "documentacion",
+                         "archivo":  "Estandar_Imagenes_Versionado_Docker.md",
+                         "sha256":  "FE867B5AE71CC5497E0FAD70066A399D807665A0089C392EC680D787246CCB4A",
+                         "tamanoBytes":  5063
+                     },
+                     {
+                         "nombre":  "backend-sbom.spdx",
+                         "categoria":  "reporte",
+                         "archivo":  "backend-sbom.spdx.json",
+                         "sha256":  "5861BAECB98279D9357C78881FA8969F5A00F24800C7DEF014BC24C37A67336C",
+                         "tamanoBytes":  1795169
+                     },
+                     {
+                         "nombre":  "backend-trivy",
+                         "categoria":  "reporte",
+                         "archivo":  "backend-trivy.json",
+                         "sha256":  "6C914A080E62383B1889DD9519A34E0A7CE9CAB3B33EA07F8B67BED0194D7DDD",
+                         "tamanoBytes":  705104
+                     },
+                     {
+                         "nombre":  "frontend-sbom.spdx",
+                         "categoria":  "reporte",
+                         "archivo":  "frontend-sbom.spdx.json",
+                         "sha256":  "46434FE2DF2CBBFC29B670BE6D7D0F4346930ED102FF06A4CEF80AD1A166E7FA",
+                         "tamanoBytes":  865269
+                     },
+                     {
+                         "nombre":  "frontend-trivy",
+                         "categoria":  "reporte",
+                         "archivo":  "frontend-trivy.json",
+                         "sha256":  "952263EA4A28B7E6082E1B47F4D256C2CB16CC5E07E2864B1E78AA7AEC532E84",
+                         "tamanoBytes":  253038
+                     },
+                     {
+                         "nombre":  "proxy-sbom.spdx",
+                         "categoria":  "reporte",
+                         "archivo":  "proxy-sbom.spdx.json",
+                         "sha256":  "BCFEBF8387E21EC2513428E7AFCC9B06B4DC71D2F032909BF07E91967662FC96",
+                         "tamanoBytes":  866465
+                     },
+                     {
+                         "nombre":  "proxy-trivy",
+                         "categoria":  "reporte",
+                         "archivo":  "proxy-trivy.json",
+                         "sha256":  "45D446F1D5A023C3D7E1DD37EF9D88DFF3FA92DD2E1A6031F2A1AAD890EB44E7",
+                         "tamanoBytes":  252277
+                     }
+                 ]
+}

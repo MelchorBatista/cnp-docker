@@ -50,4 +50,22 @@ if ($findings.Count -gt 0) {
     exit 1
 }
 
+if ([System.IO.Path]::GetFileName($resolvedPath) -ieq "Migracion_Docker.ini") {
+    $lineasConComentarioDesplazado = @()
+    $numeroLinea = 0
+
+    foreach ($linea in ($text -split "`r?`n")) {
+        $numeroLinea++
+        if ($linea -match '^[ \t]+#') {
+            $lineasConComentarioDesplazado += $numeroLinea
+        }
+    }
+
+    if ($lineasConComentarioDesplazado.Count -gt 0) {
+        Write-Error "El archivo '$resolvedPath' tiene comentarios con '#' fuera de la columna 1."
+        Write-Host ("  lineas invalidas: {0}" -f ($lineasConComentarioDesplazado -join ", "))
+        exit 1
+    }
+}
+
 Write-Host "OK: '$resolvedPath' es UTF-8 valido y no presenta mojibake comun."

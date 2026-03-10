@@ -1,0 +1,122 @@
+docker : #0 building with "desktop-linux" instance using docker driver
+At C:\Desarrollo\cnp-docker\scripts\migracion\ejecutar_pipeline_base_docker_dev_ci.ps1:314 char:51
++ ... esultadoBuild = Ejecutar-Comando -Comando { docker @argumentosBuild }
++                                                 ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (#0 building wit...g docker driver:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.67kB 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#2 ...
+
+#3 [internal] load metadata for docker.io/library/node:24-bookworm-slim
+#3 DONE 4.3s
+
+#2 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#2 ...
+
+#4 [auth] library/nginx:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#2 DONE 5.1s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 138B done
+#5 DONE 0.0s
+
+#6 [build 1/6] FROM 
+docker.io/library/node:24-bookworm-slim@sha256:e8e2e91b1378f83c5b2dd15f0247f34110e2fe895f6ca7719dbb780f929368eb
+#6 resolve 
+docker.io/library/node:24-bookworm-slim@sha256:e8e2e91b1378f83c5b2dd15f0247f34110e2fe895f6ca7719dbb780f929368eb 0.0s 
+done
+#6 DONE 0.0s
+
+#7 [runtime 1/4] FROM 
+docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#7 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 
+0.0s done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 91.58kB 0.2s done
+#8 DONE 0.2s
+
+#9 [build 2/6] WORKDIR /app
+#9 CACHED
+
+#10 [build 3/6] COPY package.json package-lock.json ./
+#10 CACHED
+
+#11 [runtime 2/4] COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+#11 CACHED
+
+#12 [build 4/6] RUN npm ci
+#12 CACHED
+
+#13 [build 5/6] COPY . .
+#13 ...
+
+#14 [runtime 3/4] RUN rm -rf /usr/share/nginx/html/* && mkdir -p /usr/share/nginx/html/cnp
+#14 DONE 0.3s
+
+#13 [build 5/6] COPY . .
+#13 DONE 0.7s
+
+#15 [build 6/6] RUN npm run build
+#15 0.391 
+#15 0.391 > cnp@0.0.0 build
+#15 0.391 > tsc -b && vite build
+#15 0.391 
+#15 7.344 vite v6.3.6 building for production...
+#15 7.424 transforming...
+#15 18.06 ✓ 12272 modules transformed.
+#15 18.71 [plugin vite:reporter] 
+#15 18.71 (!) /app/src/components/SubirNominaJSON.tsx is dynamically imported by /app/src/components/Encabezado.tsx 
+but also statically imported by /app/src/components/Principal.tsx, dynamic import will not move module into another 
+chunk.
+#15 18.71 
+#15 18.72 rendering chunks...
+#15 18.75 computing gzip size...
+#15 18.79 dist/index.html                    0.66 kB │ gzip:   0.38 kB
+#15 18.79 dist/assets/index-DXJnl9bl.js  1,151.77 kB │ gzip: 349.63 kB
+#15 18.79 
+#15 18.79 (!) Some chunks are larger than 500 kB after minification. Consider:
+#15 18.79 - Using dynamic import() to code-split the application
+#15 18.79 - Use build.rollupOptions.output.manualChunks to improve chunking: 
+https://rollupjs.org/configuration-options/#output-manualchunks
+#15 18.79 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+#15 18.79 ✓ built in 11.41s
+#15 DONE 19.0s
+
+#16 [runtime 4/4] COPY --from=build /app/dist/ /usr/share/nginx/html/cnp/
+#16 DONE 0.0s
+
+#17 exporting to image
+#17 exporting layers
+#17 exporting layers 0.2s done
+#17 exporting manifest sha256:7eb88730dd0b6822615ef866a57cd8209bc6d36b7d53c6d9b35c93102fc0eb8c 0.0s done
+#17 exporting config sha256:da2fd78f516979fe3b4a8a303b79799db50c5729c631f13da5ad428b6d20e66a 0.0s done
+#17 exporting attestation manifest sha256:9e937df5003bdb02d44f737a2d4f31b8da475e56c9a48aedf00151c3bb479702 0.0s done
+#17 exporting manifest list sha256:bb02c86c82b73ef2c193f6beee4b5d10a13079a0e1b868c5e489ed0c948fa7cc 0.0s done
+#17 naming to docker.io/library/cnp-frontend:sha-97e66a7
+#17 naming to docker.io/library/cnp-frontend:sha-97e66a7 done
+#17 unpacking to docker.io/library/cnp-frontend:sha-97e66a7 0.1s done
+#17 naming to docker.io/library/cnp-frontend:dev
+#17 naming to docker.io/library/cnp-frontend:dev done
+#17 unpacking to docker.io/library/cnp-frontend:dev 0.0s done
+#17 DONE 0.5s
+
+ [33m4 warnings found (use docker --debug to expand):
+[0m - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG 
+"VITE_CHANGE_PASSWORD_ENDPOINT") (line 11)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "VITE_SECRET_KEY") (line 14)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "VITE_CHANGE_PASSWORD_ENDPOINT") 
+(line 16)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "VITE_SECRET_KEY") (line 16)
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/21riq5plmgoc5scusrpbbao3l

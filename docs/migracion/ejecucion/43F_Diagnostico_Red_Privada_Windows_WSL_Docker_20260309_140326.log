@@ -1,0 +1,86 @@
+﻿Inicio diagnostico red privada: 2026-03-09T14:03:44.2931357-04:00
+Proyecto: C:\Desarrollo\cnp-docker
+Objetivo: VALIDACION
+Host: q1491n2023
+Puerto: 1433
+Ruta entorno: C:\Desarrollo\cnp-docker\backend\.env.local
+Distro WSL: Ubuntu
+Imagen Docker: cnp-proxy:b221
+Origen imagen Docker: fallback_local
+IP principal resuelta en Windows: 192.168.30.35
+
+[WSL VERSION]
+WSL version: 2.6.3.0
+
+Kernel version: 6.6.87.2-1
+
+WSLg version: 1.0.71
+
+MSRDC version: 1.2.6353
+
+Direct3D version: 1.611.1-81528511
+
+DXCore version: 10.0.26100.1-240331-1435.ge-release
+
+Windows version: 10.0.26200.7840
+
+[WSL STATUS]
+Default Distribution: Ubuntu
+
+Default Version: 2
+
+[DOCKER VERSION]
+Client:
+ Version:           29.2.1
+ API version:       1.53
+ Go version:        go1.25.6
+ Git commit:        a5c7197
+ Built:             Mon Feb  2 17:20:16 2026
+ OS/Arch:           windows/amd64
+ Context:           desktop-linux
+
+Server: Docker Desktop 4.63.0 (220185)
+ Engine:
+  Version:          29.2.1
+  API version:      1.53 (minimum version 1.44)
+  Go version:       go1.25.6
+  Git commit:       6bc6209
+  Built:            Mon Feb  2 17:17:24 2026
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          v2.2.1
+  GitCommit:        dea7da592f5d1d2b7755e3a161be07f43fad8f75
+ runc:
+  Version:          1.3.4
+  GitCommit:        v1.3.4-0-gd6d73eb8
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+[DOCKER CONTEXT]
+desktop-linux
+
+[RESUMEN]
+[{"capa":"Windows","verificacion":"DNS host","estado":"OK","detalle":"192.168.30.35"},{"capa":"Windows","verificacion":"TCP host","estado":"OK","detalle":"Conectividad TCP habilitada"},{"capa":"Windows","verificacion":"TCP IP","estado":"OK","detalle":"Conectividad TCP habilitada"},{"capa":"WSL","verificacion":"Distro","estado":"OK","detalle":"Distro disponible: Ubuntu"},{"capa":"WSL","verificacion":"DNS host","estado":"OK","detalle":"192.168.30.35   STREAM q1491n2023.map.local\r\n192.168.30.35   DGRAM  \r\n192.168.30.35   RAW"},{"capa":"WSL","verificacion":"TCP host","estado":"OK","detalle":"TCP_OK"},{"capa":"WSL","verificacion":"TCP IP","estado":"OK","detalle":"TCP_OK"},{"capa":"Docker","verificacion":"DNS host","estado":"FALLA","detalle":"Server:\t\t192.168.65.7\r\nAddress:\t192.168.65.7:53\r\n\r\nNon-authoritative answer:\r\nName:\tq1491n2023.map.local\r\nAddress: 192.168.30.35\r\n\r\n** server can\u0027t find q1491n2023: NXDOMAIN"},{"capa":"Docker","verificacion":"TCP host","estado":"FALLA","detalle":"docker : nc: bad address \u0027q1491n2023\u0027\r\nAt C:\\Desarrollo\\cnp-docker\\scripts\\migracion\\diagnosticar_red_privada_windows_wsl_docker.ps1:262 char:46\r\n+ ...  -Comando { docker run --rm --entrypoint sh $Imagen -lc \"nc -vz -w 5  ...\r\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (nc: bad address \u0027q1491n2023\u0027:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError"},{"capa":"Docker","verificacion":"TCP IP","estado":"OK","detalle":"docker : 192.168.30.35 (192.168.30.35:1433) open\r\nAt C:\\Desarrollo\\cnp-docker\\scripts\\migracion\\diagnosticar_red_privada_windows_wsl_docker.ps1:262 char:46\r\n+ ...  -Comando { docker run --rm --entrypoint sh $Imagen -lc \"nc -vz -w 5  ...\r\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (192.168.30.35 (192.168.30.35:1433) open:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError"}]
+
+[DIAGNOSTICO]
+Docker llega por IP pero no por nombre. El problema probable es DNS dentro de Docker/WSL.
+
+Resumen diagnostico red privada:
+
+capa    verificacion estado detalle                                                                                    
+----    ------------ ------ -------                                                                                    
+Windows DNS host     OK     192.168.30.35                                                                              
+Windows TCP host     OK     Conectividad TCP habilitada                                                                
+Windows TCP IP       OK     Conectividad TCP habilitada                                                                
+WSL     Distro       OK     Distro disponible: Ubuntu                                                                  
+WSL     DNS host     OK     192.168.30.35   STREAM q1491n2023.map.local...                                             
+WSL     TCP host     OK     TCP_OK                                                                                     
+WSL     TCP IP       OK     TCP_OK                                                                                     
+Docker  DNS host     FALLA  Server:		192.168.65.7...                                                                   
+Docker  TCP host     FALLA  docker : nc: bad address 'q1491n2023'...                                                   
+Docker  TCP IP       OK     docker : 192.168.30.35 (192.168.30.35:1433) open...
+
+Diagnostico: Docker llega por IP pero no por nombre. El problema probable es DNS dentro de Docker/WSL.
+Log generado: C:\Desarrollo\cnp-docker\.\docs\migracion\ejecucion\43F_Diagnostico_Red_Privada_Windows_WSL_Docker_20260309_140326.log

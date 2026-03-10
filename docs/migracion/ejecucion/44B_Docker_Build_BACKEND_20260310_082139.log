@@ -1,0 +1,74 @@
+docker : #0 building with "desktop-linux" instance using docker driver
+At C:\Desarrollo\cnp-docker\scripts\migracion\ejecutar_pipeline_base_docker_dev_ci.ps1:319 char:51
++ ... esultadoBuild = Ejecutar-Comando -Comando { docker @argumentosBuild }
++                                                 ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (#0 building wit...g docker driver:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.34kB 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:24-bookworm-slim
+#2 DONE 10.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 118B 0.0s done
+#3 DONE 0.0s
+
+#4 [deps 1/5] FROM 
+docker.io/library/node:24-bookworm-slim@sha256:e8e2e91b1378f83c5b2dd15f0247f34110e2fe895f6ca7719dbb780f929368eb
+#4 resolve 
+docker.io/library/node:24-bookworm-slim@sha256:e8e2e91b1378f83c5b2dd15f0247f34110e2fe895f6ca7719dbb780f929368eb 0.0s 
+done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 153.05kB 0.1s done
+#5 DONE 0.2s
+
+#6 [deps 3/5] RUN apt-get update     && apt-get install -y --no-install-recommends python3 make g++ unixodbc 
+unixodbc-dev     && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#7 [build 3/5] COPY --from=deps /app/node_modules ./node_modules
+#7 CACHED
+
+#8 [build 5/5] RUN npm run build     && npm prune --omit=dev
+#8 CACHED
+
+#9 [deps 2/5] WORKDIR /app
+#9 CACHED
+
+#10 [deps 4/5] COPY package.json package-lock.json ./
+#10 CACHED
+
+#11 [build 4/5] COPY . .
+#11 CACHED
+
+#12 [runtime 3/5] COPY --from=build /app/package.json /app/package-lock.json ./
+#12 CACHED
+
+#13 [deps 5/5] RUN npm ci
+#13 CACHED
+
+#14 [runtime 4/5] COPY --from=build /app/node_modules ./node_modules
+#14 CACHED
+
+#15 [runtime 5/5] COPY --from=build /app/build ./build
+#15 CACHED
+
+#16 exporting to image
+#16 exporting layers 0.0s done
+#16 exporting manifest sha256:b2ef93ec0eca41e3c0de99d28062396e9ccf107898acb00b03e90683a777a564 0.0s done
+#16 exporting config sha256:9ce35dcc54275fa272ec6bc49a6773bf1070333f5ce5c18843edb83a7e982b6b 0.0s done
+#16 exporting attestation manifest sha256:f9b5e060bb946dfdb19f266a072b3e2bf92ff7538a01e5891462a2ccecf7f4ce 0.0s done
+#16 exporting manifest list sha256:53070b271086bf319767461bfa5599600db2f9da6135d74116d84364b581579d done
+#16 naming to docker.io/library/cnp-backend:sha-97e66a7 done
+#16 unpacking to docker.io/library/cnp-backend:sha-97e66a7 0.0s done
+#16 naming to docker.io/library/cnp-backend:dev done
+#16 unpacking to docker.io/library/cnp-backend:dev 0.0s done
+#16 DONE 0.2s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/ouj5z0capoa07mj93be28w5kn

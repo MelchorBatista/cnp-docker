@@ -1,0 +1,85 @@
+﻿Inicio diagnostico red privada: 2026-03-09T14:00:49.4648549-04:00
+Proyecto: C:\Desarrollo\cnp-docker
+Objetivo: VALIDACION
+Host: q1491n2023
+Puerto: 1433
+Ruta entorno: C:\Desarrollo\cnp-docker\backend\.env.local
+Distro WSL: Ubuntu
+Imagen Docker: busybox:1.36
+IP principal resuelta en Windows: 192.168.30.35
+
+[WSL VERSION]
+WSL version: 2.6.3.0
+
+Kernel version: 6.6.87.2-1
+
+WSLg version: 1.0.71
+
+MSRDC version: 1.2.6353
+
+Direct3D version: 1.611.1-81528511
+
+DXCore version: 10.0.26100.1-240331-1435.ge-release
+
+Windows version: 10.0.26200.7840
+
+[WSL STATUS]
+Default Distribution: Ubuntu
+
+Default Version: 2
+
+[DOCKER VERSION]
+Client:
+ Version:           29.2.1
+ API version:       1.53
+ Go version:        go1.25.6
+ Git commit:        a5c7197
+ Built:             Mon Feb  2 17:20:16 2026
+ OS/Arch:           windows/amd64
+ Context:           desktop-linux
+
+Server: Docker Desktop 4.63.0 (220185)
+ Engine:
+  Version:          29.2.1
+  API version:      1.53 (minimum version 1.44)
+  Go version:       go1.25.6
+  Git commit:       6bc6209
+  Built:            Mon Feb  2 17:17:24 2026
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          v2.2.1
+  GitCommit:        dea7da592f5d1d2b7755e3a161be07f43fad8f75
+ runc:
+  Version:          1.3.4
+  GitCommit:        v1.3.4-0-gd6d73eb8
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+[DOCKER CONTEXT]
+desktop-linux
+
+[RESUMEN]
+[{"capa":"Windows","verificacion":"DNS host","estado":"OK","detalle":"192.168.30.35"},{"capa":"Windows","verificacion":"TCP host","estado":"OK","detalle":"Conectividad TCP habilitada"},{"capa":"Windows","verificacion":"TCP IP","estado":"OK","detalle":"Conectividad TCP habilitada"},{"capa":"WSL","verificacion":"Distro","estado":"OK","detalle":"Distro disponible: Ubuntu"},{"capa":"WSL","verificacion":"DNS host","estado":"FALLA","detalle":"wsl : bash: line 0: bash: \r\nIAB3AHMAbAAgAC0AZAAgACQARABpAHMAdAByAG8AIAAtAC0AIABiAGEAcwBoACAALQBsAGMAIAAkAGMAbwBtAGEAbgBkAG8AIAA=: invalid option \r\nname\r\nAt C:\\Desarrollo\\cnp-docker\\scripts\\migracion\\diagnosticar_red_privada_windows_wsl_docker.ps1:213 char:46\r\n+ ... o = Ejecutar-Comando -Comando { wsl -d $Distro -- bash -lc $comando }\r\n+                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (bash: line 0: b...lid option name:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError"},{"capa":"WSL","verificacion":"TCP host","estado":"FALLA","detalle":"wsl : bash: line 0: bash: \r\nIAB3AHMAbAAgAC0AZAAgACQARABpAHMAdAByAG8AIAAtAC0AIABiAGEAcwBoACAALQBsAGMAIAAkAGMAbwBtAGEAbgBkAG8AIAA=: invalid option \r\nname\r\nAt C:\\Desarrollo\\cnp-docker\\scripts\\migracion\\diagnosticar_red_privada_windows_wsl_docker.ps1:230 char:46\r\n+ ... o = Ejecutar-Comando -Comando { wsl -d $Distro -- bash -lc $comando }\r\n+                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (bash: line 0: b...lid option name:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError"},{"capa":"WSL","verificacion":"TCP IP","estado":"FALLA","detalle":"wsl : bash: line 0: bash: \r\nIAB3AHMAbAAgAC0AZAAgACQARABpAHMAdAByAG8AIAAtAC0AIABiAGEAcwBoACAALQBsAGMAIAAkAGMAbwBtAGEAbgBkAG8AIAA=: invalid option \r\nname\r\nAt C:\\Desarrollo\\cnp-docker\\scripts\\migracion\\diagnosticar_red_privada_windows_wsl_docker.ps1:230 char:46\r\n+ ... o = Ejecutar-Comando -Comando { wsl -d $Distro -- bash -lc $comando }\r\n+                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (bash: line 0: b...lid option name:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError"},{"capa":"Docker","verificacion":"DNS host","estado":"FALLA","detalle":"docker : Unable to find image \u0027busybox:1.36\u0027 locally\r\nAt C:\\Desarrollo\\cnp-docker\\scripts\\migracion\\diagnosticar_red_privada_windows_wsl_docker.ps1:245 char:46\r\n+ ...  -Comando { docker run --rm $Imagen sh -lc \"nslookup \u0027$hostEscapado\u0027\" ...\r\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (Unable to find ...x:1.36\u0027 locally:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\n1.36: Pulling from library/busybox\r\ndocker: failed to copy: httpReadSeeker: failed open: failed to do request: Get \"https://docker-images-prod.6aa30f8b08e1\r\n6409b46e0173d6de2f56.r2.cloudflarestorage.com/registry-v2/docker/registry/v2/blobs/sha256/31/3104107137c9d0d7546d9c19d7\r\n59bfcad52af4494ee342ce8188285ad781b587/data?X-Amz-Algorithm=AWS4-HMAC-SHA256\u0026X-Amz-Credential=f1baa2dd9b876aeb89efebbfc\r\n9e5d5f4%2F20260309%2Fauto%2Fs3%2Faws4_request\u0026X-Amz-Date=20260309T180036Z\u0026X-Amz-Expires=1200\u0026X-Amz-SignedHeaders=host\u0026X\r\n-Amz-Signature=11e6a03bc236c68341cba419a88f1877487246a7f96ac6bcd82810119d33d42c\": dialing \r\ndocker-images-prod.6aa30f8b08e16409b46e0173d6de2f56.r2.cloudflarestorage.com:443 container via direct connection \r\nbecause Docker Desktop has no HTTPS proxy: connecting to \r\ndocker-images-prod.6aa30f8b08e16409b46e0173d6de2f56.r2.cloudflarestorage.com:443: dial tcp: lookup \r\ndocker-images-prod.6aa30f8b08e16409b46e0173d6de2f56.r2.cloudflarestorage.com: no such host\r\n\r\nRun \u0027docker run --help\u0027 for more information"},{"capa":"Docker","verificacion":"TCP host","estado":"FALLA","detalle":"docker : Unable to find image \u0027busybox:1.36\u0027 locally\r\nAt C:\\Desarrollo\\cnp-docker\\scripts\\migracion\\diagnosticar_red_privada_windows_wsl_docker.ps1:261 char:46\r\n+ ...  -Comando { docker run --rm $Imagen sh -lc \"nc -vz -w 5 \u0027$hostEscapad ...\r\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (Unable to find ...x:1.36\u0027 locally:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\n1.36: Pulling from library/busybox\r\ndocker: failed to copy: httpReadSeeker: failed open: failed to do request: Get \"https://docker-images-prod.6aa30f8b08e1\r\n6409b46e0173d6de2f56.r2.cloudflarestorage.com/registry-v2/docker/registry/v2/blobs/sha256/11/114f4abb67995cfe8e368760f3\r\nbc8a1d00e12ac9883c7c304d80987f24452e75/data?X-Amz-Algorithm=AWS4-HMAC-SHA256\u0026X-Amz-Credential=f1baa2dd9b876aeb89efebbfc\r\n9e5d5f4%2F20260309%2Fauto%2Fs3%2Faws4_request\u0026X-Amz-Date=20260309T180047Z\u0026X-Amz-Expires=1200\u0026X-Amz-SignedHeaders=host\u0026X\r\n-Amz-Signature=d418b48d7de411bf7fcf9e0267397d74dd37d5744f3402a60543852588adcd2f\": dialing \r\ndocker-images-prod.6aa30f8b08e16409b46e0173d6de2f56.r2.cloudflarestorage.com:443 container via direct connection \r\nbecause Docker Desktop has no HTTPS proxy: connecting to \r\ndocker-images-prod.6aa30f8b08e16409b46e0173d6de2f56.r2.cloudflarestorage.com:443: dial tcp: lookup \r\ndocker-images-prod.6aa30f8b08e16409b46e0173d6de2f56.r2.cloudflarestorage.com: no such host\r\n\r\nRun \u0027docker run --help\u0027 for more information"},{"capa":"Docker","verificacion":"TCP IP","estado":"FALLA","detalle":"docker : Unable to find image \u0027busybox:1.36\u0027 locally\r\nAt C:\\Desarrollo\\cnp-docker\\scripts\\migracion\\diagnosticar_red_privada_windows_wsl_docker.ps1:261 char:46\r\n+ ...  -Comando { docker run --rm $Imagen sh -lc \"nc -vz -w 5 \u0027$hostEscapad ...\r\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (Unable to find ...x:1.36\u0027 locally:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\n1.36: Pulling from library/busybox\r\ndocker: failed to copy: httpReadSeeker: failed open: failed to do request: Get \"https://docker-images-prod.6aa30f8b08e1\r\n6409b46e0173d6de2f56.r2.cloudflarestorage.com/registry-v2/docker/registry/v2/blobs/sha256/11/114f4abb67995cfe8e368760f3\r\nbc8a1d00e12ac9883c7c304d80987f24452e75/data?X-Amz-Algorithm=AWS4-HMAC-SHA256\u0026X-Amz-Credential=f1baa2dd9b876aeb89efebbfc\r\n9e5d5f4%2F20260309%2Fauto%2Fs3%2Faws4_request\u0026X-Amz-Date=20260309T180049Z\u0026X-Amz-Expires=1200\u0026X-Amz-SignedHeaders=host\u0026X\r\n-Amz-Signature=f5adcbc52365792eb301f3fdf252654799f3790b489d192b123ec39fca0cbd81\": dialing \r\ndocker-images-prod.6aa30f8b08e16409b46e0173d6de2f56.r2.cloudflarestorage.com:443 container via direct connection \r\nbecause Docker Desktop has no HTTPS proxy: connecting to \r\ndocker-images-prod.6aa30f8b08e16409b46e0173d6de2f56.r2.cloudflarestorage.com:443: dial tcp: lookup \r\ndocker-images-prod.6aa30f8b08e16409b46e0173d6de2f56.r2.cloudflarestorage.com: no such host\r\n\r\nRun \u0027docker run --help\u0027 for more information"}]
+
+[DIAGNOSTICO]
+Windows llega pero WSL no. El problema probable esta en el modo de red de WSL, DNS interno de WSL o una politica corporativa sobre trafico virtualizado.
+
+Resumen diagnostico red privada:
+
+capa    verificacion estado detalle                                                                                    
+----    ------------ ------ -------                                                                                    
+Windows DNS host     OK     192.168.30.35                                                                              
+Windows TCP host     OK     Conectividad TCP habilitada                                                                
+Windows TCP IP       OK     Conectividad TCP habilitada                                                                
+WSL     Distro       OK     Distro disponible: Ubuntu                                                                  
+WSL     DNS host     FALLA  wsl : bash: line 0: bash: ...                                                              
+WSL     TCP host     FALLA  wsl : bash: line 0: bash: ...                                                              
+WSL     TCP IP       FALLA  wsl : bash: line 0: bash: ...                                                              
+Docker  DNS host     FALLA  docker : Unable to find image 'busybox:1.36' locally...                                    
+Docker  TCP host     FALLA  docker : Unable to find image 'busybox:1.36' locally...                                    
+Docker  TCP IP       FALLA  docker : Unable to find image 'busybox:1.36' locally...
+
+Diagnostico: Windows llega pero WSL no. El problema probable esta en el modo de red de WSL, DNS interno de WSL o una politica corporativa sobre trafico virtualizado.
+Log generado: C:\Desarrollo\cnp-docker\.\docs\migracion\ejecucion\43F_Diagnostico_Red_Privada_Windows_WSL_Docker_20260309_140010.log
