@@ -1,0 +1,72 @@
+﻿== Archivos versionados ==
+backend/.dockerignore
+backend/Dockerfile
+frontend/.dockerignore
+frontend/Dockerfile
+frontend/nginx/default.conf
+proxy/Dockerfile
+proxy/default.conf.template
+
+== Submodules ==
+
+== Hashes ==
+C:\Desarrollo\cnp-docker\backend\Dockerfile|SHA256|ACFA2E6E920A49E8CA6348206E30F6A1003B046E9EF1C425387A444FEDB6256F
+C:\Desarrollo\cnp-docker\frontend\Dockerfile|SHA256|7C3116429A6A5DDE549ABE56BF07CDD3956EE7D04DFBDF18CEA1C3C1404E9BDC
+C:\Desarrollo\cnp-docker\proxy\Dockerfile|SHA256|8C0F39288184FC335E34A8B661988BD95ABA023AB739C06A7AD3E06EE4356A12
+C:\Desarrollo\cnp-docker\frontend\nginx\default.conf|SHA256|17A2D605AC78A6CDFE482EFF9F54692E31EA7F214BECA3DE14580AA35C92E9FE
+C:\Desarrollo\cnp-docker\proxy\default.conf.template|SHA256|4277496F9B3FA3BAF7B3A69CCCE065F074933563E3A8BE30E06C6F2BF4B47180
+
+== Instrucciones clave Dockerfiles ==
+C:\Desarrollo\cnp-docker\backend\Dockerfile:1:FROM node:24-bookworm-slim AS deps
+C:\Desarrollo\cnp-docker\backend\Dockerfile:3:WORKDIR /app
+C:\Desarrollo\cnp-docker\backend\Dockerfile:9:COPY package.json package-lock.json ./
+C:\Desarrollo\cnp-docker\backend\Dockerfile:10:RUN npm ci
+C:\Desarrollo\cnp-docker\backend\Dockerfile:12:FROM node:24-bookworm-slim AS build
+C:\Desarrollo\cnp-docker\backend\Dockerfile:14:WORKDIR /app
+C:\Desarrollo\cnp-docker\backend\Dockerfile:16:COPY --from=deps /app/node_modules ./node_modules
+C:\Desarrollo\cnp-docker\backend\Dockerfile:17:COPY . .
+C:\Desarrollo\cnp-docker\backend\Dockerfile:19:RUN npm run build \
+C:\Desarrollo\cnp-docker\backend\Dockerfile:22:FROM node:24-bookworm-slim AS runtime
+C:\Desarrollo\cnp-docker\backend\Dockerfile:24:WORKDIR /app
+C:\Desarrollo\cnp-docker\backend\Dockerfile:26:ARG OCI_TITLE=cnp-backend
+C:\Desarrollo\cnp-docker\backend\Dockerfile:27:ARG OCI_VERSION=dev
+C:\Desarrollo\cnp-docker\backend\Dockerfile:28:ARG OCI_REVISION=local
+C:\Desarrollo\cnp-docker\backend\Dockerfile:29:ARG OCI_SOURCE=local
+C:\Desarrollo\cnp-docker\backend\Dockerfile:30:ARG OCI_CREATED=unknown
+C:\Desarrollo\cnp-docker\backend\Dockerfile:42:COPY --from=build /app/package.json /app/package-lock.json ./
+C:\Desarrollo\cnp-docker\backend\Dockerfile:43:COPY --from=build /app/node_modules ./node_modules
+C:\Desarrollo\cnp-docker\backend\Dockerfile:44:COPY --from=build /app/build ./build
+C:\Desarrollo\cnp-docker\backend\Dockerfile:46:EXPOSE 3000
+C:\Desarrollo\cnp-docker\backend\Dockerfile:48:HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+C:\Desarrollo\cnp-docker\backend\Dockerfile:51:USER node
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:1:FROM node:24-bookworm-slim AS build
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:3:WORKDIR /app
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:33:COPY package.json package-lock.json ./
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:34:RUN npm ci
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:36:COPY . .
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:37:RUN npm run build
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:39:FROM nginx:1.27-alpine AS runtime
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:41:ARG OCI_TITLE=cnp-frontend
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:42:ARG OCI_VERSION=dev
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:43:ARG OCI_REVISION=local
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:44:ARG OCI_SOURCE=local
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:45:ARG OCI_CREATED=unknown
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:53:COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:55:COPY --from=build /app/dist/ /usr/share/nginx/html/cnp/
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:57:EXPOSE 80
+C:\Desarrollo\cnp-docker\frontend\Dockerfile:59:HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+C:\Desarrollo\cnp-docker\proxy\Dockerfile:1:FROM nginx:1.27-alpine
+C:\Desarrollo\cnp-docker\proxy\Dockerfile:3:ARG OCI_TITLE=cnp-proxy
+C:\Desarrollo\cnp-docker\proxy\Dockerfile:4:ARG OCI_VERSION=dev
+C:\Desarrollo\cnp-docker\proxy\Dockerfile:5:ARG OCI_REVISION=local
+C:\Desarrollo\cnp-docker\proxy\Dockerfile:6:ARG OCI_SOURCE=local
+C:\Desarrollo\cnp-docker\proxy\Dockerfile:7:ARG OCI_CREATED=unknown
+C:\Desarrollo\cnp-docker\proxy\Dockerfile:15:ENV PROXY_FRONTEND_UPSTREAM=http://frontend:80 \
+C:\Desarrollo\cnp-docker\proxy\Dockerfile:22:COPY default.conf.template /etc/nginx/templates/default.conf.template
+C:\Desarrollo\cnp-docker\proxy\Dockerfile:24:EXPOSE 80
+C:\Desarrollo\cnp-docker\proxy\Dockerfile:26:HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+
+== Imagenes DEV actuales ==
+["cnp-backend:dev"]|sha256:6f1f8cf862f30f4cf05b898201a10c7d68bf3bd69a20748bac361345c8ef2c77|2026-03-10T17:05:36.084647526Z
+["cnp-frontend:dev"]|sha256:b4c428182a43de9057f6e95abb7a93850ea08784b6025929f2da5c2ecec19b72|2026-03-10T17:06:24.127769144Z
+["cnp-proxy:dev"]|sha256:48101139890febe9223638e5a9cc61fc16daeaad6d40a2f78d4ac134839da7a8|2026-03-10T17:33:38.154466413Z
