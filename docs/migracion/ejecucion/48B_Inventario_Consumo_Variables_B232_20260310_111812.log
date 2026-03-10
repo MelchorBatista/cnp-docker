@@ -1,0 +1,162 @@
+﻿Inventario de consumo de variables - 2026-03-10
+
+docker-compose.staging.yml:11:      - "${PROXY_HTTP_PORT:-80}:80"
+docker-compose.staging.yml:12:      - "${PROXY_HTTPS_PORT:-443}:443"
+docker-compose.staging.yml:15:      PROXY_FRONTEND_UPSTREAM: "http://frontend:80"
+docker-compose.staging.yml:16:      PROXY_BACKEND_UPSTREAM: "http://backend:3000"
+docker-compose.staging.yml:17:      PROXY_BASE_PATH: "/cnp"
+docker-compose.staging.yml:18:      PROXY_API_PREFIX: "/api"
+docker-compose.staging.yml:19:      PROXY_SOCKETIO_PATH: "/socket.io"
+docker-compose.staging.yml:20:      PROXY_SOCKETIO_COMPAT_PATH: "/cnp/socket.io"
+docker-compose.staging.yml:53:      BACKEND_URL: "${BACKEND_URL:-}"
+docker-compose.staging.yml:58:      DB_PORT_VALIDACION: "${DB_PORT_VALIDACION:-1433}"
+docker-compose.staging.yml:61:      DB_USER_VALIDACION: "${DB_USER_VALIDACION:-USUARIO_SQL_VALIDACION}"
+docker-compose.staging.yml:62:      DB_PASSWORD_VALIDACION: "${DB_PASSWORD_VALIDACION:-CLAVE_SQL_VALIDACION}"
+docker-compose.staging.yml:65:      DB_PORT_CONSULTA: "${DB_PORT_CONSULTA:-1433}"
+docker-compose.staging.yml:68:      DB_USER_CONSULTA: "${DB_USER_CONSULTA:-USUARIO_SQL_CONSULTA}"
+docker-compose.staging.yml:69:      DB_PASSWORD_CONSULTA: "${DB_PASSWORD_CONSULTA:-CLAVE_SQL_CONSULTA}"
+docker-compose.staging.yml:72:      DB_PORT_RECEPCION: "${DB_PORT_RECEPCION:-1433}"
+docker-compose.staging.yml:75:      DB_USER_RECEPCION: "${DB_USER_RECEPCION:-USUARIO_SQL_RECEPCION}"
+docker-compose.staging.yml:76:      DB_PASSWORD_RECEPCION: "${DB_PASSWORD_RECEPCION:-CLAVE_SQL_RECEPCION}"
+docker-compose.staging.yml:80:      SQL_POOL_MAX: "${SQL_POOL_MAX:-10}"
+docker-compose.staging.yml:81:      SQL_POOL_MIN: "${SQL_POOL_MIN:-0}"
+docker-compose.staging.yml:82:      SQL_POOL_IDLE_MILLIS: "${SQL_POOL_IDLE_MILLIS:-30000}"
+docker-compose.staging.yml:84:      SMTP_HOST: "${SMTP_HOST:-SMTP_HOST}"
+docker-compose.staging.yml:85:      SMTP_PORT: "${SMTP_PORT:-2525}"
+docker-compose.staging.yml:86:      SMTP_USER: "${SMTP_USER:-SMTP_USER}"
+docker-compose.staging.yml:87:      SMTP_PASS: "${SMTP_PASS:-SMTP_PASS}"
+docker-compose.staging.yml:93:      JWT_SECRET: "${JWT_SECRET:-CAMBIAR_EN_CADA_ENTORNO}"
+docker-compose.staging.yml:95:      RATE_LIMIT_WINDOW_MS: "${RATE_LIMIT_WINDOW_MS:-60000}"
+docker-compose.staging.yml:96:      RATE_LIMIT_MAX: "${RATE_LIMIT_MAX:-300}"
+docker-compose.staging.yml:98:      FILE_UPLOAD_MAX_MB: "${FILE_UPLOAD_MAX_MB:-50}"
+proxy\Dockerfile:15:ENV PROXY_FRONTEND_UPSTREAM=http://frontend:80 \
+proxy\Dockerfile:16:    PROXY_BACKEND_UPSTREAM=http://backend:3000 \
+proxy\Dockerfile:17:    PROXY_BASE_PATH=/cnp \
+proxy\Dockerfile:18:    PROXY_API_PREFIX=/api \
+proxy\Dockerfile:19:    PROXY_SOCKETIO_PATH=/socket.io \
+proxy\Dockerfile:20:    PROXY_SOCKETIO_COMPAT_PATH=/cnp/socket.io
+proxy\default.conf.template:13:        return 302 ${PROXY_BASE_PATH}/;
+proxy\default.conf.template:16:    location = ${PROXY_BASE_PATH} {
+proxy\default.conf.template:17:        return 301 ${PROXY_BASE_PATH}/;
+proxy\default.conf.template:20:    location ${PROXY_BASE_PATH}/ {
+proxy\default.conf.template:21:        proxy_pass ${PROXY_FRONTEND_UPSTREAM};
+proxy\default.conf.template:30:    location = ${PROXY_API_PREFIX} {
+proxy\default.conf.template:31:        proxy_pass ${PROXY_BACKEND_UPSTREAM};
+proxy\default.conf.template:40:    location ${PROXY_API_PREFIX}/ {
+proxy\default.conf.template:41:        proxy_pass ${PROXY_BACKEND_UPSTREAM};
+proxy\default.conf.template:50:    location = ${PROXY_SOCKETIO_PATH} {
+proxy\default.conf.template:51:        proxy_pass ${PROXY_BACKEND_UPSTREAM};
+proxy\default.conf.template:62:    location ${PROXY_SOCKETIO_PATH}/ {
+proxy\default.conf.template:63:        proxy_pass ${PROXY_BACKEND_UPSTREAM};
+proxy\default.conf.template:74:    location = ${PROXY_SOCKETIO_COMPAT_PATH} {
+proxy\default.conf.template:75:        proxy_pass ${PROXY_BACKEND_UPSTREAM}${PROXY_SOCKETIO_PATH};
+proxy\default.conf.template:86:    location ${PROXY_SOCKETIO_COMPAT_PATH}/ {
+proxy\default.conf.template:87:        rewrite ^${PROXY_SOCKETIO_COMPAT_PATH}(.*)$ ${PROXY_SOCKETIO_PATH}$1 break;
+proxy\default.conf.template:88:        proxy_pass ${PROXY_BACKEND_UPSTREAM};
+frontend\Dockerfile:17:ENV VITE_BASEPATH=${VITE_BASEPATH} \
+frontend\Dockerfile:18:    VITE_BACKEND_URL=${VITE_BACKEND_URL} \
+frontend\Dockerfile:19:    VITE_API_BASE_URL=${VITE_API_BASE_URL} \
+frontend\Dockerfile:20:    VITE_API_URL=${VITE_API_URL} \
+frontend\Dockerfile:21:    VITE_SOCKET_URL=${VITE_SOCKET_URL} \
+frontend\Dockerfile:22:    VITE_VALIDATION_ENDPOINT=${VITE_VALIDATION_ENDPOINT} \
+frontend\Dockerfile:23:    VITE_STATUS_ENDPOINT=${VITE_STATUS_ENDPOINT} \
+frontend\Dockerfile:24:    VITE_CHANGE_PASSWORD_ENDPOINT=${VITE_CHANGE_PASSWORD_ENDPOINT} \
+frontend\Dockerfile:25:    VITE_LOGIN_ENDPOINT=${VITE_LOGIN_ENDPOINT} \
+frontend\Dockerfile:26:    VITE_STATUS_PAGE_URL=${VITE_STATUS_PAGE_URL} \
+frontend\Dockerfile:27:    VITE_SECRET_KEY=${VITE_SECRET_KEY}
+frontend\.env.example:20:CNP_DEV_BACKEND_ORIGIN=https://backend-dev.example.local
+frontend\.env.example:21:IIS_BACKEND_UPSTREAM=http://backend:3000
+frontend\.env.example:23:FRONTEND_WEB_BACKEND_UPSTREAM=
+backend\config\configuracionBases.ts:9:const archivoEntorno = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.local';
+backend\config\configuracionBases.ts:13:    process.env.RUTA_ARCHIVO_ENTORNO,
+backend\config\configuracionBases.ts:24:  dotenv.config({ path: rutaEntorno });
+backend\config\configuracionBases.ts:27:  dotenv.config();
+backend\config\configuracionBases.ts:119:    obtenerBooleanoEntorno(process.env.SQL_ENCRYPT, false),
+backend\config\configuracionBases.ts:123:    obtenerBooleanoEntorno(process.env.SQL_TRUST_SERVER_CERTIFICATE, true),
+frontend\public\web.config.template:34:        <!-- 1) Proxy de /api/* al backend Node definido por IIS_BACKEND_UPSTREAM -->
+frontend\public\web.config.template:37:          <action type="Rewrite" url="__IIS_BACKEND_UPSTREAM__/{R:1}" logRewrittenUrl="true" />
+frontend\public\web.config:34:        <!-- 1) Proxy de /api/* al backend Node definido por IIS_BACKEND_UPSTREAM -->
+backend\middleware\csrfOrigin.ts:13:    process.env.CSRF_ORIGINS,
+backend\middleware\csrfOrigin.ts:14:    process.env.CORS_ORIGINS,
+backend\middleware\csrfOrigin.ts:15:    process.env.FRONTEND_URL,
+backend\middleware\auth.ts:45:    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
+frontend\vite.config.ts:27:  const base = normalizeBaseForVite(env.VITE_BASEPATH);
+frontend\vite.config.ts:30:    (env.CNP_DEV_BACKEND_ORIGIN || env.VITE_BACKEND_URL || env.BACKEND_URL || "")
+frontend\vite.config.ts:36:      "Defina CNP_DEV_BACKEND_ORIGIN o VITE_BACKEND_URL antes de ejecutar `npm run dev`."
+frontend\scripts\render-web-config.mjs:13:  process.env.IIS_BACKEND_UPSTREAM?.trim() ||
+frontend\scripts\render-web-config.mjs:14:  process.env.FRONTEND_WEB_BACKEND_UPSTREAM?.trim() ||
+frontend\scripts\render-web-config.mjs:22:const rendered = template.replace(/__IIS_BACKEND_UPSTREAM__/g, upstream);
+frontend\scripts\render-web-config.mjs:26:  `[render-web-config] web.config generado con IIS_BACKEND_UPSTREAM=${upstream}`
+frontend\src\App.tsx:56:const ROUTER_BASENAME = (((import.meta as any).env?.BASE_URL as string | undefined) || "/")
+frontend\src\utils\socket.ts:22:const basepath = normalizeBase((import.meta as any).env?.VITE_BASEPATH);
+frontend\src\utils\socket.ts:25:const isProd = (import.meta as any).env?.PROD === true;
+frontend\src\utils\socket.ts:26:const isDev = (import.meta as any).env?.DEV === true;
+frontend\src\utils\socket.ts:57:  const socketEnv = (import.meta as any).env?.VITE_SOCKET_URL;
+frontend\src\utils\socket.ts:58:  const backendOrigin = originFromUrl((import.meta as any).env?.VITE_BACKEND_URL);
+backend\controllers\userController.ts:67:  const apiPrefix = normalizePath(process.env.API_PREFIX || '/api', '/api');
+backend\controllers\userController.ts:68:  const backendUrl = normalizePublicUrl(process.env.BACKEND_URL);
+backend\controllers\userController.ts:75:  const frontendUrl = normalizePublicUrl(process.env.FRONTEND_URL);
+backend\controllers\userController.ts:84:  const frontendUrl = normalizePublicUrl(process.env.FRONTEND_URL);
+backend\controllers\userController.ts:89:  const basePath = normalizePath(process.env.BASE_PATH || '/', '/');
+backend\controllers\userController.ts:182:      host: process.env.SMTP_HOST as string,
+backend\controllers\userController.ts:183:      port: parseInt(process.env.SMTP_PORT as string, 10),
+backend\controllers\userController.ts:186:        user: process.env.SMTP_USER as string,
+backend\controllers\userController.ts:187:        pass: process.env.SMTP_PASS as string,
+backend\controllers\userController.ts:195:      from: `"Recepción Nóminas" <${process.env.SMTP_USER}>`,
+frontend\src\slices\authSlice.tsx:41:  (import.meta as any).env?.VITE_LOGIN_ENDPOINT || "/auth/login";
+frontend\src\utils\cryptoUtils.ts:13:const secretKey = import.meta.env.VITE_SECRET_KEY || "default_secret_key";
+frontend\src\services\UserService.ts:10:  (import.meta as any).env?.VITE_API_BASE_URL ||
+frontend\src\services\UserService.ts:11:  (import.meta as any).env?.VITE_API_URL ||
+frontend\src\services\UserService.ts:12:  (import.meta as any).env?.VITE_BACKEND_URL ||
+frontend\src\services\UserService.ts:26:  const response = await fetch(`${API_BASE}/usuarios`);
+backend\services\validationDataService.ts:15:const VALIDATION_CACHE_TTL_MS = Number(process.env.VALIDATION_CACHE_TTL_MS || 300000);
+backend\controllers\authController.ts:22:const JWT_SECRET = process.env.JWT_SECRET as string;
+frontend\src\services\ReporteNominaService.ts:11:  (import.meta as any).env?.VITE_API_BASE_URL ||
+frontend\src\services\ReporteNominaService.ts:12:  (import.meta as any).env?.VITE_API_URL ||
+frontend\src\services\ReporteNominaService.ts:13:  (import.meta as any).env?.VITE_BACKEND_URL ||
+frontend\src\services\ReporteNominaService.ts:34:  const res = await fetch(`${API_BASE}/reporte-nomina/organismos`, {
+frontend\src\services\ReporteNominaService.ts:49:    `${API_BASE}/reporte-nomina/anios?organismoId=${organismoId}`,
+frontend\src\services\ReporteNominaService.ts:65:    `${API_BASE}/reporte-nomina/meses?organismoId=${organismoId}&year=${year}`,
+frontend\src\services\ReporteNominaService.ts:82:    `${API_BASE}/reporte-nomina/por-mes?organismoId=${organismoId}&year=${year}&mes=${mes}`,
+frontend\src\services\ReporteNominaService.ts:99:    `${API_BASE}/reporte-nomina/pdf?organismoId=${organismoId}&year=${year}&mes=${mes}`,
+frontend\src\services\nominaExistenteService.ts:12:  (import.meta as any).env?.VITE_API_BASE_URL ||
+frontend\src\services\nominaExistenteService.ts:13:  (import.meta as any).env?.VITE_API_URL ||
+frontend\src\services\nominaExistenteService.ts:14:  (import.meta as any).env?.VITE_BACKEND_URL ||
+frontend\src\services\nominaExistenteService.ts:28:  const res = await axios.get<ExisteResponse>(`${API}/nomina/existe`, {
+frontend\src\services\nominaExistenteService.ts:46:    url: `${API}/nomina`,
+frontend\src\store.ts:31:  // devTools: process.env.NODE_ENV !== "production",
+frontend\src\services\apiClient.ts:16:const rawBackendUrl = (import.meta.env.VITE_BACKEND_URL || "").trim();
+frontend\src\services\apiClient.ts:17:const rawApiBase = (import.meta.env.VITE_API_BASE_URL || "/api").trim();
+frontend\src\services\apiClient.ts:132:  const envEndpoint = (import.meta as any).env?.VITE_VALIDATION_ENDPOINT as
+frontend\src\services\apiClient.ts:195:        if (import.meta.env.MODE === "development") {
+backend\testMail.ts:13:dotenv.config();
+backend\testMail.ts:16:  host: process.env.SMTP_HOST as string,
+backend\testMail.ts:17:  port: parseInt(process.env.SMTP_PORT as string, 10),
+backend\testMail.ts:20:    user: process.env.SMTP_USER as string,
+backend\testMail.ts:21:    pass: process.env.SMTP_PASS as string,
+backend\testMail.ts:26:  from: `"Test Mailtrap" <${process.env.SMTP_USER}>`,
+backend\server.ts:23:// Cargar .env.local o .env.production según NODE_ENV
+backend\server.ts:24:const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.local';
+backend\server.ts:25:dotenv.config({ path: path.resolve(__dirname, envFile) });
+backend\server.ts:60:const PORT = Number(process.env.PORT || process.env.SERVER_PORT || 3000);
+backend\server.ts:61:const TRUST_PROXY = String(process.env.TRUST_PROXY || 'true').toLowerCase() === 'true';
+backend\server.ts:84:  return `${A}${B}`;
+backend\server.ts:87:const BASE_PATH = normalizePath(process.env.BASE_PATH || '/');
+backend\server.ts:88:const API_PREFIX = normalizePath(process.env.API_PREFIX || '/api');
+backend\server.ts:89:const SOCKETIO_PATH = normalizePath(process.env.SOCKETIO_PATH || '/socket.io');
+backend\server.ts:97:  const fromEnv = (process.env.CORS_ORIGINS || process.env.FRONTEND_URL || '')
+backend\server.ts:299:  console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
+backend\server.ts:300:  console.log(`   BASE path: ${BASE_PATH}`);
+backend\server.ts:301:  console.log(`   API prefix: ${API_PREFIX}`);
+backend\server.ts:302:  console.log(`   API mounts: ${API_BASE_PRIMARY}  &  ${API_BASE_DIRECT}`);
+backend\server.ts:303:  console.log(`   Socket.IO path: ${SOCKETIO_PATH}`);
+frontend\src\components\AutenticaDO.tsx:74:const APP_BASE = ((import.meta as any).env?.BASE_URL || "/")
+frontend\src\components\AutenticaDO.tsx:80:  return APP_BASE && APP_BASE !== "/" ? `${APP_BASE}${normalizedPath}` : normalizedPath;
+frontend\src\components\AutenticaDO.tsx:84:const envStatusEndpoint = ((import.meta as any).env?.VITE_STATUS_ENDPOINT || "")
+frontend\src\components\AutenticaDO.tsx:88:  (import.meta as any).env?.VITE_CHANGE_PASSWORD_ENDPOINT || ""
+frontend\src\components\AutenticaDO.tsx:93:  envStatusEndpoint || `${API_BASE}/auth/status`;
+frontend\src\components\AutenticaDO.tsx:96:  `${API_BASE}/auth/change-password`;
+frontend\src\components\AutenticaDO.tsx:216:        ? `${STATUS_ENDPOINT}username=${encodeURIComponent(username)}`
+frontend\src\components\AutenticaDO.tsx:217:        : `${STATUS_ENDPOINT}?username=${encodeURIComponent(username)}`;
+frontend\src\components\Estadisticas.tsx:209:    <Box display="flex" height={`calc(100vh - ${FOOTER_HEIGHT}px)`}>
+frontend\src\components\GestionarUsuarios.tsx:250:    borderBottom: `2px solid ${COLOR_AZUL_OSCURO}`,
