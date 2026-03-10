@@ -1,0 +1,63 @@
+{
+    "fecha":  "2026-03-10T09:53:53",
+    "tagEntorno":  "dev",
+    "tagInmutable":  "sha-c03d6c7",
+    "revision":  "c03d6c76f11c2fe5ed0be497ff075f5dcb69df87",
+    "origen":  "git@github.com:MelchorBatista/rnp.git",
+    "herramientas":  [
+                         {
+                             "nombre":  "hadolint",
+                             "estrategia":  "local",
+                             "version":  "Haskell Dockerfile Linter 2.14.0",
+                             "ubicacion":  "C:\\Users\\dionicio.batista\\AppData\\Local\\Microsoft\\WinGet\\Packages\\hadolint.hadolint_Microsoft.Winget.Source_8wekyb3d8bbwe\\hadolint.exe"
+                         },
+                         {
+                             "nombre":  "trivy",
+                             "estrategia":  "local",
+                             "version":  "Version: 0.69.3\r\nVulnerability DB:\r\n  Version: 2\r\n  UpdatedAt: 2026-03-09 12:31:03.592439599 +0000 UTC\r\n  NextUpdate: 2026-03-10 12:31:03.592439289 +0000 UTC\r\n  DownloadedAt: 2026-03-09 19:14:33.5766309 +0000 UTC",
+                             "ubicacion":  "C:\\Users\\dionicio.batista\\AppData\\Local\\Microsoft\\WinGet\\Packages\\AquaSecurity.Trivy_Microsoft.Winget.Source_8wekyb3d8bbwe\\trivy.exe"
+                         },
+                         {
+                             "nombre":  "syft",
+                             "estrategia":  "local",
+                             "version":  "Application:   syft\r\nVersion:       1.42.1\r\nBuildDate:     2026-02-18T17:42:49Z\r\nGitCommit:     0a3f7bb06ee168495ee54b8b66fccb22a056fe99\r\nGitDescription: v1.42.1\r\nPlatform:      windows/amd64\r\nGoVersion:     go1.25.7\r\nCompiler:      gc\r\nSchemaVersion: 16.1.3",
+                             "ubicacion":  "C:\\Users\\dionicio.batista\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Anchore.Syft_Microsoft.Winget.Source_8wekyb3d8bbwe\\syft.exe"
+                         }
+                     ],
+    "imagenes":  [
+                     {
+                         "nombre":  "backend",
+                         "etiquetaInmutable":  "cnp-backend:sha-c03d6c7",
+                         "etiquetaEntorno":  "cnp-backend:dev",
+                         "logBuild":  "C:\\Desarrollo\\cnp-docker\\.\\docs\\migracion\\ejecucion\\44B_Docker_Build_BACKEND_20260310_095352.log",
+                         "logHadolint":  "C:\\Desarrollo\\cnp-docker\\.\\docs\\migracion\\ejecucion\\44C_Hadolint_BACKEND_20260310_095352.log",
+                         "logTrivy":  "C:\\Desarrollo\\cnp-docker\\.\\docs\\migracion\\ejecucion\\44D_Trivy_BACKEND_20260310_095352.log",
+                         "logSyft":  "C:\\Desarrollo\\cnp-docker\\.\\docs\\migracion\\ejecucion\\44E_Syft_BACKEND_20260310_095352.log",
+                         "reporteTrivy":  "C:\\Desarrollo\\cnp-docker\\.\\evidence\\docker_dev_ci\\pipeline_20260310_095352\\reportes\\backend-trivy.json",
+                         "reporteSyft":  "C:\\Desarrollo\\cnp-docker\\.\\evidence\\docker_dev_ci\\pipeline_20260310_095352\\reportes\\backend-sbom.spdx.json"
+                     },
+                     {
+                         "nombre":  "frontend",
+                         "etiquetaInmutable":  "cnp-frontend:sha-c03d6c7",
+                         "etiquetaEntorno":  "cnp-frontend:dev",
+                         "logBuild":  "C:\\Desarrollo\\cnp-docker\\.\\docs\\migracion\\ejecucion\\44B_Docker_Build_FRONTEND_20260310_095352.log",
+                         "logHadolint":  "C:\\Desarrollo\\cnp-docker\\.\\docs\\migracion\\ejecucion\\44C_Hadolint_FRONTEND_20260310_095352.log",
+                         "logTrivy":  "C:\\Desarrollo\\cnp-docker\\.\\docs\\migracion\\ejecucion\\44D_Trivy_FRONTEND_20260310_095352.log",
+                         "logSyft":  "C:\\Desarrollo\\cnp-docker\\.\\docs\\migracion\\ejecucion\\44E_Syft_FRONTEND_20260310_095352.log",
+                         "reporteTrivy":  "C:\\Desarrollo\\cnp-docker\\.\\evidence\\docker_dev_ci\\pipeline_20260310_095352\\reportes\\frontend-trivy.json",
+                         "reporteSyft":  "C:\\Desarrollo\\cnp-docker\\.\\evidence\\docker_dev_ci\\pipeline_20260310_095352\\reportes\\frontend-sbom.spdx.json"
+                     },
+                     {
+                         "nombre":  "proxy",
+                         "etiquetaInmutable":  "cnp-proxy:sha-c03d6c7",
+                         "etiquetaEntorno":  "cnp-proxy:dev",
+                         "logBuild":  "C:\\Desarrollo\\cnp-docker\\.\\docs\\migracion\\ejecucion\\44B_Docker_Build_PROXY_20260310_095352.log",
+                         "logHadolint":  "C:\\Desarrollo\\cnp-docker\\.\\docs\\migracion\\ejecucion\\44C_Hadolint_PROXY_20260310_095352.log",
+                         "logTrivy":  "C:\\Desarrollo\\cnp-docker\\.\\docs\\migracion\\ejecucion\\44D_Trivy_PROXY_20260310_095352.log",
+                         "logSyft":  "C:\\Desarrollo\\cnp-docker\\.\\docs\\migracion\\ejecucion\\44E_Syft_PROXY_20260310_095352.log",
+                         "reporteTrivy":  "C:\\Desarrollo\\cnp-docker\\.\\evidence\\docker_dev_ci\\pipeline_20260310_095352\\reportes\\proxy-trivy.json",
+                         "reporteSyft":  "C:\\Desarrollo\\cnp-docker\\.\\evidence\\docker_dev_ci\\pipeline_20260310_095352\\reportes\\proxy-sbom.spdx.json"
+                     }
+                 ],
+    "paquete":  "C:\\Desarrollo\\cnp-docker\\.\\evidence\\docker_dev_ci\\pipeline_20260310_095352\\paquete"
+}
