@@ -1,0 +1,160 @@
+﻿== Archivos versionados ==
+docker-compose.dev.yml
+scripts/migracion/levantar_stack_compose_dev.ps1
+
+== Hash compose ==
+docker-compose.dev.yml|SHA256|F5797807F0809421E86245A5B026E5A5EC726377CB7DDAA74B06E4F81F1E235F
+
+== docker compose config ==
+name: cnp-dev
+services:
+  backend:
+    build:
+      context: C:\Desarrollo\cnp-docker\backend
+      dockerfile: Dockerfile
+      args:
+        OCI_CREATED: unknown
+        OCI_REVISION: local
+        OCI_SOURCE: local
+        OCI_TITLE: cnp-backend
+        OCI_VERSION: dev
+    environment:
+      API_PREFIX: /api
+      BACKEND_URL: ""
+      BASE_PATH: /cnp
+      CONSULTA_DATABASE: DBCSASPv2
+      CORS_ORIGINS: http://localhost:8080
+      CSRF_ORIGINS: http://localhost:8080
+      DB_AUTH_CONSULTA: sql
+      DB_AUTH_RECEPCION: sql
+      DB_AUTH_VALIDACION: sql
+      DB_PASSWORD: CLAVE_SQL_COMPARTIDA
+      DB_PASSWORD_CONSULTA: CLAVE_SQL_CONSULTA
+      DB_PASSWORD_RECEPCION: CLAVE_SQL_RECEPCION
+      DB_PASSWORD_VALIDACION: CLAVE_SQL_VALIDACION
+      DB_PORT: "1433"
+      DB_PORT_CONSULTA: "1433"
+      DB_PORT_RECEPCION: "1433"
+      DB_PORT_VALIDACION: "1433"
+      DB_SERVER: host.docker.internal
+      DB_SERVER_CONSULTA: host.docker.internal
+      DB_SERVER_RECEPCION: host.docker.internal
+      DB_SERVER_VALIDACION: host.docker.internal
+      DB_USER: USUARIO_SQL_COMPARTIDO
+      DB_USER_CONSULTA: USUARIO_SQL_CONSULTA
+      DB_USER_RECEPCION: USUARIO_SQL_RECEPCION
+      DB_USER_VALIDACION: USUARIO_SQL_VALIDACION
+      FILE_UPLOAD_MAX_MB: "50"
+      FRONTEND_URL: http://localhost:8080
+      JWT_KID: val-2025-07-dev
+      JWT_PRIVATE_KEY_PATH: /run/secrets/es256-priv.pem
+      JWT_SECRET: CAMBIAR_EN_CADA_ENTORNO
+      LOG_LEVEL: debug
+      NODE_ENV: production
+      PORT: "3000"
+      RATE_LIMIT_MAX: "300"
+      RATE_LIMIT_WINDOW_MS: "60000"
+      RECEPCION_DATABASE: DBCSASPv2
+      RUTA_ARCHIVO_ENTORNO: ""
+      SERVER_PORT: "3000"
+      SMTP_FROM: CNP <no-reply@example.com>
+      SMTP_HOST: host.docker.internal
+      SMTP_PASS: SMTP_PASS
+      SMTP_PORT: "2525"
+      SMTP_SECURE: "false"
+      SMTP_USER: SMTP_USER
+      SOCKETIO_PATH: /socket.io
+      SQL_ENCRYPT: "false"
+      SQL_POOL_IDLE_MILLIS: "30000"
+      SQL_POOL_MAX: "10"
+      SQL_POOL_MIN: "0"
+      SQL_TRUST_SERVER_CERTIFICATE: "true"
+      TRUST_PROXY: "true"
+      VALIDACION_DATABASE: TablasComunes
+      VALIDATION_CACHE_TTL_MS: "300000"
+    expose:
+      - "3000"
+    extra_hosts:
+      - host.docker.internal=host-gateway
+    image: cnp-backend:dev
+    networks:
+      red_aplicacion: null
+    restart: unless-stopped
+  frontend:
+    build:
+      context: C:\Desarrollo\cnp-docker\frontend
+      dockerfile: Dockerfile
+      args:
+        IIS_BACKEND_UPSTREAM: http://backend:3000
+        OCI_CREATED: unknown
+        OCI_REVISION: local
+        OCI_SOURCE: local
+        OCI_TITLE: cnp-frontend
+        OCI_VERSION: dev
+        VITE_API_BASE_URL: /api
+        VITE_API_URL: /api
+        VITE_BASEPATH: /cnp/
+        VITE_CHANGE_PASSWORD_ENDPOINT: ""
+        VITE_LOGIN_ENDPOINT: /auth/login
+        VITE_SECRET_KEY: CAMBIAR_EN_CADA_ENTORNO
+        VITE_SOCKET_URL: ""
+        VITE_STATUS_ENDPOINT: ""
+        VITE_STATUS_PAGE_URL: ""
+        VITE_VALIDATION_ENDPOINT: ""
+    expose:
+      - "80"
+    image: cnp-frontend:dev
+    networks:
+      red_aplicacion: null
+    restart: unless-stopped
+  proxy:
+    build:
+      context: C:\Desarrollo\cnp-docker\proxy
+      dockerfile: Dockerfile
+      args:
+        OCI_CREATED: unknown
+        OCI_REVISION: local
+        OCI_SOURCE: local
+        OCI_TITLE: cnp-proxy
+        OCI_VERSION: dev
+    depends_on:
+      backend:
+        condition: service_healthy
+        required: true
+      frontend:
+        condition: service_healthy
+        required: true
+    environment:
+      PROXY_API_PREFIX: /api
+      PROXY_BACKEND_UPSTREAM: http://backend:3000
+      PROXY_BASE_PATH: /cnp
+      PROXY_FRONTEND_UPSTREAM: http://frontend:80
+      PROXY_SOCKETIO_COMPAT_PATH: /cnp/socket.io
+      PROXY_SOCKETIO_PATH: /socket.io
+    image: cnp-proxy:dev
+    networks:
+      red_aplicacion: null
+      red_publica: null
+    ports:
+      - mode: ingress
+        target: 80
+        published: "8080"
+        protocol: tcp
+    restart: unless-stopped
+networks:
+  red_aplicacion:
+    name: cnp-dev_red_aplicacion
+    driver: bridge
+    internal: true
+  red_publica:
+    name: cnp-dev_red_publica
+    driver: bridge
+
+== docker compose ps ==
+NAME                 IMAGE              COMMAND                  SERVICE    CREATED             STATUS                       PORTS
+cnp-dev-backend-1    cnp-backend:dev    "docker-entrypoint.s…"   backend    About an hour ago   Up About an hour (healthy)   3000/tcp
+cnp-dev-frontend-1   cnp-frontend:dev   "/docker-entrypoint.…"   frontend   About an hour ago   Up About an hour (healthy)   80/tcp
+cnp-dev-proxy-1      cnp-proxy:dev      "/docker-entrypoint.…"   proxy      About an hour ago   Up About an hour (healthy)   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+
+== Puerto publicado proxy ==
+0.0.0.0:8080
