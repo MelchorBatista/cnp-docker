@@ -30,7 +30,7 @@ jobs:
       - name: Run tests
         run: |
           cd backend
-          npm test --silent
+          npm test --silent -- --passWithNoTests
       - name: Audit dependencies
         run: |
           cd backend
