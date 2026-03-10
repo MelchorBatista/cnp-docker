@@ -29,6 +29,7 @@ import BlockIcon from "@mui/icons-material/Block";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { keyframes } from "@emotion/react";
 import { useSelector } from "react-redux";
+import { buildApiUrl } from "../services/apiClient";
 
 // Interfaz para el usuario
 interface User {
@@ -168,7 +169,7 @@ const Asignaciones: React.FC = () => {
 
   // Cargar organismos
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/organismos`)
+    fetch(buildApiUrl("/organismos"))
       .then((res) => res.json())
       .then((data) => {
         const organismosArray = Array.isArray(data)
@@ -185,7 +186,7 @@ const Asignaciones: React.FC = () => {
 
   // Cargar usuarios
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios`)
+    fetch(buildApiUrl("/usuarios"))
       .then((res) => res.json())
       .then((data) => {
         const usersArray = Array.isArray(data) ? data : data.recordset || [];
@@ -201,9 +202,7 @@ const Asignaciones: React.FC = () => {
   // Función para obtener asignaciones actualizadas
   const fetchAssignments = async () => {
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/asignaciones`
-      );
+      const res = await fetch(buildApiUrl("/asignaciones"));
       if (!res.ok) throw new Error("Error en la red");
       const data = await res.json();
       setAllAssignments(data);
@@ -298,7 +297,7 @@ const Asignaciones: React.FC = () => {
         correoUsuario: selectedUser.CorreoElectronico,
       };
 
-      await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/asignaciones`, {
+      await fetch(buildApiUrl("/asignaciones"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -328,7 +327,7 @@ const Asignaciones: React.FC = () => {
         correoUsuario: selectedUser.CorreoElectronico,
       };
 
-      await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/asignaciones`, {
+      await fetch(buildApiUrl("/asignaciones"), {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

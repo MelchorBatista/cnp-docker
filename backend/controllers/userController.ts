@@ -35,6 +35,72 @@ interface ConfirmarCorreoQuery {
   correo?: string;
 }
 
+const normalizePublicUrl = (value: string | undefined): string => {
+  return (value || '').trim().replace(/\/+$/, '');
+};
+
+const normalizePath = (value: string | undefined, fallback: string): string => {
+  const raw = (value || fallback).trim();
+  if (!raw) {
+    return fallback;
+  }
+
+  if (raw === '/') {
+    return '/';
+  }
+
+  const withLeadingSlash = raw.startsWith('/') ? raw : `/${raw}`;
+  return withLeadingSlash.replace(/\/+$/, '');
+};
+
+const joinUrl = (baseUrl: string, path: string): string => {
+  const base = normalizePublicUrl(baseUrl);
+  const normalizedPath = normalizePath(path, '/');
+  if (!base) {
+    throw new Error('No se pudo construir la URL publica porque falta la base.');
+  }
+
+  return normalizedPath === '/' ? base : `${base}${normalizedPath}`;
+};
+
+const buildPublicApiBaseUrl = (): string => {
+  const apiPrefix = normalizePath(process.env.API_PREFIX || '/api', '/api');
+  const backendUrl = normalizePublicUrl(process.env.BACKEND_URL);
+  if (backendUrl) {
+    return backendUrl.toLowerCase().endsWith(apiPrefix.toLowerCase())
+      ? backendUrl
+      : joinUrl(backendUrl, apiPrefix);
+  }
+
+  const frontendUrl = normalizePublicUrl(process.env.FRONTEND_URL);
+  if (!frontendUrl) {
+    throw new Error('FRONTEND_URL o BACKEND_URL deben estar configurados para generar enlaces publicos.');
+  }
+
+  return joinUrl(frontendUrl, apiPrefix);
+};
+
+const buildFrontendConfirmationUrl = (): string => {
+  const frontendUrl = normalizePublicUrl(process.env.FRONTEND_URL);
+  if (!frontendUrl) {
+    throw new Error('FRONTEND_URL debe estar configurado para redireccionar a confirmacionCorreo.');
+  }
+
+  const basePath = normalizePath(process.env.BASE_PATH || '/', '/');
+  const confirmationPath = basePath === '/' ? '/confirmacionCorreo' : `${basePath}/confirmacionCorreo`;
+  return joinUrl(frontendUrl, confirmationPath);
+};
+
+const tryRedirectToFrontendConfirmation = (res: Response): boolean => {
+  try {
+    res.redirect(buildFrontendConfirmationUrl());
+    return true;
+  } catch (redirectError) {
+    console.error('Error construyendo redirect de confirmacionCorreo:', redirectError);
+    return false;
+  }
+};
+
 /**
  * Registra solicitudes de acceso al portal y envia correo de confirmacion.
  * @param req Contiene los datos personales enviados desde el formulario.
@@ -123,9 +189,7 @@ export const solicitarAcceso = async (req: CustomRequest, res: Response): Promis
     });
 
     // Construcción del enlace de confirmación
-    const confirmationLink = `${
-      process.env.BACKEND_URL || 'http://localhost:3000'
-    }/api/usuarios/confirmar-correo?token=${codigoTemporalCorreo}&correo=${encodeURIComponent(correoElectronico)}`;
+    const confirmationLink = `${buildPublicApiBaseUrl()}/usuarios/confirmar-correo?token=${codigoTemporalCorreo}&correo=${encodeURIComponent(correoElectronico)}`;
 
     const mailOptions = {
       from: `"Recepción Nóminas" <${process.env.SMTP_USER}>`,
@@ -222,7 +286,9 @@ export const confirmarCorreo = async (req: CustomRequest, res: Response): Promis
   try {
     const { token, correo } = req.query as ConfirmarCorreoQuery;
     if (!token || !correo) {
-      res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/confirmacionCorreo`);
+      if (!tryRedirectToFrontendConfirmation(res)) {
+        res.status(500).json({ mensaje: 'FRONTEND_URL o BASE_PATH no configurados.' });
+      }
       return;
     }
 
@@ -238,7 +304,9 @@ export const confirmarCorreo = async (req: CustomRequest, res: Response): Promis
       );
 
     if (usuarioQuery.recordset.length === 0) {
-      res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/confirmacionCorreo`);
+      if (!tryRedirectToFrontendConfirmation(res)) {
+        res.status(500).json({ mensaje: 'FRONTEND_URL o BASE_PATH no configurados.' });
+      }
       return;
     }
 
@@ -263,10 +331,14 @@ export const confirmarCorreo = async (req: CustomRequest, res: Response): Promis
     );
 
     // Redirigir al usuario al componente de confirmación en el frontend
-    res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/confirmacionCorreo`);
+    if (!tryRedirectToFrontendConfirmation(res)) {
+      res.status(500).json({ mensaje: 'FRONTEND_URL o BASE_PATH no configurados.' });
+    }
   } catch (error) {
     console.error('❌ Error en confirmación de correo:', error);
-    res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/confirmacionCorreo`);
+    if (!tryRedirectToFrontendConfirmation(res)) {
+      res.status(500).json({ mensaje: 'Error interno del servidor' });
+    }
   }
 };
 

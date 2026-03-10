@@ -53,6 +53,10 @@ const CNP_COLORS = {
   tropicalGreen: "#739619",
 } as const;
 
+const ROUTER_BASENAME = (((import.meta as any).env?.BASE_URL as string | undefined) || "/")
+  .trim()
+  .replace(/\/+$/, "") || "/";
+
 // Tema global alineado con la guia visual CNP
 const theme = createTheme({
   typography: {
@@ -178,7 +182,7 @@ function App() {
       />
 
       <ErrorBoundary>
-        <Router>
+        <Router basename={ROUTER_BASENAME === "/" ? undefined : ROUTER_BASENAME}>
           {/* Encabezado y Pie solo se montan una vez */}
           <Encabezado />
           <AppRoutes />

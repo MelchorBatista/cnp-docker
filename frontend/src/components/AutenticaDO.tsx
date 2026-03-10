@@ -30,6 +30,7 @@ import {
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../hooks/hooks";
+import { API_BASE_URL } from "../services/apiClient";
 
 // ====== Utilidades de validación ======
 const isValidEmail = (email: string): boolean => {
@@ -70,12 +71,28 @@ const STATUS_MESSAGES: Record<string, string> = {
 };
 
 // ====== Config API (con fallback correcto) ======
-const API_BASE =
-  import.meta.env.VITE_API_BASE_URL?.toString() || "http://localhost:3000/api";
+const APP_BASE = ((import.meta as any).env?.BASE_URL || "/")
+  .toString()
+  .trim()
+  .replace(/\/+$/, "");
+const buildAppHref = (path: string): string => {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return APP_BASE && APP_BASE !== "/" ? `${APP_BASE}${normalizedPath}` : normalizedPath;
+};
+
+const API_BASE = API_BASE_URL;
+const envStatusEndpoint = ((import.meta as any).env?.VITE_STATUS_ENDPOINT || "")
+  .toString()
+  .trim();
+const envChangePasswordEndpoint = (
+  (import.meta as any).env?.VITE_CHANGE_PASSWORD_ENDPOINT || ""
+)
+  .toString()
+  .trim();
 const STATUS_ENDPOINT =
-  import.meta.env.VITE_STATUS_ENDPOINT?.toString() || `${API_BASE}/auth/status`;
+  envStatusEndpoint || `${API_BASE}/auth/status`;
 const CHANGE_PASSWORD_ENDPOINT =
-  import.meta.env.VITE_CHANGE_PASSWORD_ENDPOINT?.toString() ||
+  envChangePasswordEndpoint ||
   `${API_BASE}/auth/change-password`;
 
 /** Traductor de errores del backend → Español (para login y errores generales) */
@@ -605,7 +622,7 @@ function AutenticaDO() {
 
             <Grid item xs={12}>
               <Button
-                href="http://localhost:5173/solicitar-acceso"
+                href={buildAppHref("/solicitar-acceso")}
                 variant="contained"
                 fullWidth
                 sx={{

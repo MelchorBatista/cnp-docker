@@ -13,8 +13,6 @@ const collectAllowedOrigins = (): Set<string> => {
     process.env.CSRF_ORIGINS,
     process.env.CORS_ORIGINS,
     process.env.FRONTEND_URL,
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
   ]
     .filter(Boolean)
     .join(',');
@@ -28,12 +26,16 @@ const collectAllowedOrigins = (): Set<string> => {
   return new Set(values);
 };
 
-const allowedOrigins = collectAllowedOrigins();
-
 export default function csrfOrigin(req: Request, res: Response, next: NextFunction): void {
   const origin = req.headers.origin;
   if (!origin) {
     next();
+    return;
+  }
+
+  const allowedOrigins = collectAllowedOrigins();
+  if (allowedOrigins.size === 0) {
+    res.status(500).json({ error: 'CSRF_ORIGINS, CORS_ORIGINS o FRONTEND_URL no configurados.' });
     return;
   }
 

@@ -42,9 +42,9 @@ function originFromUrl(u?: string): string | undefined {
  * Prod (IIS):
  *   - Same origin, path "/cnp/socket.io"
  * Dev:
- *   - Prefer VITE_SOCKET_URL (e.g., "http://localhost:28444")
+ *   - Prefer VITE_SOCKET_URL
  *   - Else use origin from VITE_BACKEND_URL (without path)
- *   - Else fallback to http://localhost:<port>
+ *   - Else use same origin and rely on the Vite proxy
  *   - Path "/socket.io" (no basepath)
  */
 let url: string | undefined = undefined;
@@ -56,15 +56,11 @@ if (isProd) {
 } else if (isDev) {
   const socketEnv = (import.meta as any).env?.VITE_SOCKET_URL;
   const backendOrigin = originFromUrl((import.meta as any).env?.VITE_BACKEND_URL);
-  const fallbackPort =
-    (import.meta as any).env?.VITE_DEV_BACKEND_PORT ||
-    (import.meta as any).env?.PORT ||
-    28444;
 
   url =
     (socketEnv && socketEnv.trim().length > 0
       ? socketEnv.trim()
-      : backendOrigin) || `http://localhost:${fallbackPort}`;
+      : backendOrigin) || undefined;
   path = "/socket.io";
 }
 

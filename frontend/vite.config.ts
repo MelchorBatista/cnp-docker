@@ -14,7 +14,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
   // Accept VITE_BASEPATH as "cnp", "/cnp" or "/cnp/"
@@ -26,16 +26,31 @@ export default defineConfig(({ mode }) => {
 
   const base = normalizeBaseForVite(env.VITE_BASEPATH);
 
-  // Backend URL resolution for DEV proxy:
-  // 1) VITE_BACKEND_URL (full http://host:port)
-  // 2) VITE_DEV_BACKEND_PORT / PORT envs
-  // 3) Fallback to http://localhost:28444 (your backend’s port)
-  const resolvedPort = env.VITE_DEV_BACKEND_PORT || env.PORT || "28444";
+  const devBackendTarget =
+    (env.CNP_DEV_BACKEND_ORIGIN || env.VITE_BACKEND_URL || env.BACKEND_URL || "")
+      .trim()
+      .replace(/\/+$/, "");
 
-  const backendUrl =
-    env.VITE_BACKEND_URL && env.VITE_BACKEND_URL.trim().length > 0
-      ? env.VITE_BACKEND_URL.trim()
-      : `http://localhost:${resolvedPort}`;
+  if (command === "serve" && !devBackendTarget) {
+    throw new Error(
+      "Defina CNP_DEV_BACKEND_ORIGIN o VITE_BACKEND_URL antes de ejecutar `npm run dev`."
+    );
+  }
+
+  const devProxy = devBackendTarget
+    ? {
+        "/api": {
+          target: devBackendTarget,
+          changeOrigin: true,
+          rewrite: (p: string) => p,
+        },
+        "/socket.io": {
+          target: devBackendTarget,
+          changeOrigin: true,
+          ws: true,
+        },
+      }
+    : undefined;
 
   return {
     base, // e.g., "/cnp/"
@@ -47,13 +62,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
-      proxy: {
-        "/api": {
-          target: backendUrl, // ← dev proxy to your backend
-          changeOrigin: true,
-          rewrite: (p) => p,
-        },
-      },
+      proxy: devProxy,
       host: true,
       port: 5173,
     },

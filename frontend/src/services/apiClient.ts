@@ -39,10 +39,16 @@ function combineBackendAndApi(backend: string, api: string): string {
   return `${backendTrimmed}${apiBase}`;
 }
 
-const BASE_URL = combineBackendAndApi(rawBackendUrl, rawApiBase);
+export const API_BASE_URL = combineBackendAndApi(rawBackendUrl, rawApiBase);
+
+export function buildApiUrl(path: string): string {
+  if (/^https?:\/\//i.test(path)) return path;
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${API_BASE_URL.replace(/\/+$/, "")}${normalizedPath}`;
+}
 
 const apiClient = axios.create({
-  baseURL: BASE_URL,
+  baseURL: API_BASE_URL,
   timeout: 15_000,
   // withCredentials: true,
 });

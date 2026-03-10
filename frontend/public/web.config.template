@@ -34,7 +34,7 @@
         <!-- 1) Proxy de /api/* al backend Node definido por IIS_BACKEND_UPSTREAM -->
         <rule name="API Proxy to Node" stopProcessing="true">
           <match url="^api/(.*)" />
-          <action type="Rewrite" url="http://backend:3000/{R:1}" logRewrittenUrl="true" />
+          <action type="Rewrite" url="__IIS_BACKEND_UPSTREAM__/{R:1}" logRewrittenUrl="true" />
           <serverVariables>
             <set name="HTTP_X_Forwarded_For" value="{REMOTE_ADDR}" />
             <set name="HTTP_X_Forwarded_Host" value="{HTTP_HOST}" />

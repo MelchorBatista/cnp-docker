@@ -50,6 +50,7 @@ services:
       SOCKETIO_PATH: "/socket.io"
 
       FRONTEND_URL: "${FRONTEND_URL:-https://staging.example.local}"
+      BACKEND_URL: "${BACKEND_URL:-}"
       CORS_ORIGINS: "${CORS_ORIGINS:-https://staging.example.local}"
       CSRF_ORIGINS: "${CSRF_ORIGINS:-https://staging.example.local}"
 
