@@ -1,0 +1,183 @@
+ Image cnp-frontend:dev Building 
+ Image cnp-backend:dev Building 
+ Image cnp-proxy:dev Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 2.41kB 0.0s done
+#1 DONE 0.0s
+
+#2 [backend internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.34kB 0.0s done
+#2 DONE 0.0s
+
+#3 [frontend internal] load build definition from Dockerfile
+#3 transferring dockerfile: 1.92kB done
+#3 DONE 0.0s
+
+#4 [proxy internal] load build definition from Dockerfile
+#4 transferring dockerfile: 895B 0.0s done
+#4 DONE 0.0s
+
+#5 [frontend internal] load metadata for docker.io/library/node:24-bookworm-slim
+#5 DONE 0.1s
+
+#6 [backend internal] load .dockerignore
+#6 transferring context:
+#6 transferring context: 118B 0.0s done
+#6 DONE 0.0s
+
+#7 [backend internal] load build context
+#7 DONE 0.0s
+
+#8 [backend deps 1/5] FROM docker.io/library/node:24-bookworm-slim@sha256:e8e2e91b1378f83c5b2dd15f0247f34110e2fe895f6ca7719dbb780f929368eb
+#8 resolve docker.io/library/node:24-bookworm-slim@sha256:e8e2e91b1378f83c5b2dd15f0247f34110e2fe895f6ca7719dbb780f929368eb 0.1s done
+#8 DONE 0.1s
+
+#7 [backend internal] load build context
+#7 transferring context: 3.20kB 0.0s done
+#7 DONE 0.0s
+
+#9 [backend deps 2/5] WORKDIR /app
+#9 CACHED
+
+#10 [backend build 4/5] COPY . .
+#10 CACHED
+
+#11 [backend deps 4/5] COPY package.json package-lock.json ./
+#11 CACHED
+
+#12 [backend deps 5/5] RUN npm ci
+#12 CACHED
+
+#13 [backend build 3/5] COPY --from=deps /app/node_modules ./node_modules
+#13 CACHED
+
+#14 [backend build 5/5] RUN npm run build     && npm prune --omit=dev
+#14 CACHED
+
+#15 [backend deps 3/5] RUN apt-get update     && apt-get install -y --no-install-recommends python3 make g++ unixodbc unixodbc-dev     && rm -rf /var/lib/apt/lists/*
+#15 CACHED
+
+#16 [backend runtime 3/5] COPY --from=build /app/package.json /app/package-lock.json ./
+#16 CACHED
+
+#17 [backend runtime 4/5] COPY --from=build /app/node_modules ./node_modules
+#17 CACHED
+
+#18 [backend runtime 5/5] COPY --from=build /app/build ./build
+#18 CACHED
+
+#19 [backend] exporting to image
+#19 exporting layers 0.0s done
+#19 exporting manifest sha256:18dfff10743bdf9bea62c33b664c79f02e777363ac98fb43a3cf3165b8f897b2 done
+#19 exporting config sha256:63e1f38d700c309c1cb4b52e8cb143a36b73734c17795abd6b1548df592e9716 done
+#19 exporting attestation manifest sha256:5058543bd1856f525c427aa7ddd2c93c67b3d2a0077f63db8a0b42b7241df4d3 0.0s done
+#19 exporting manifest list sha256:6f1f8cf862f30f4cf05b898201a10c7d68bf3bd69a20748bac361345c8ef2c77 0.0s done
+#19 naming to docker.io/library/cnp-backend:dev done
+#19 unpacking to docker.io/library/cnp-backend:dev 0.0s done
+#19 DONE 0.2s
+
+#20 [proxy internal] load metadata for docker.io/library/nginx:1.27-alpine
+#20 ...
+
+#21 [backend] resolving provenance for metadata file
+#21 DONE 0.0s
+
+#20 [proxy internal] load metadata for docker.io/library/nginx:1.27-alpine
+#20 DONE 8.4s
+
+#22 [proxy internal] load .dockerignore
+#22 transferring context: 2B done
+#22 DONE 0.0s
+
+#23 [frontend internal] load .dockerignore
+#23 transferring context: 138B done
+#23 DONE 0.0s
+
+#24 [proxy internal] load build context
+#24 transferring context: 43B done
+#24 DONE 0.0s
+
+#25 [proxy 1/2] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#25 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.0s done
+#25 DONE 0.0s
+
+#26 [proxy 2/2] COPY default.conf.template /etc/nginx/templates/default.conf.template
+#26 CACHED
+
+#8 [frontend build 1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:e8e2e91b1378f83c5b2dd15f0247f34110e2fe895f6ca7719dbb780f929368eb
+#8 resolve docker.io/library/node:24-bookworm-slim@sha256:e8e2e91b1378f83c5b2dd15f0247f34110e2fe895f6ca7719dbb780f929368eb 0.0s done
+#8 DONE 0.1s
+
+#27 [frontend internal] load build context
+#27 transferring context: 4.28kB done
+#27 DONE 0.0s
+
+#28 [frontend build 4/6] RUN npm ci
+#28 CACHED
+
+#29 [frontend runtime 3/4] RUN rm -rf /usr/share/nginx/html/* && mkdir -p /usr/share/nginx/html/cnp
+#29 CACHED
+
+#9 [frontend build 2/6] WORKDIR /app
+#9 CACHED
+
+#30 [frontend build 5/6] COPY . .
+#30 CACHED
+
+#31 [frontend runtime 2/4] COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+#31 CACHED
+
+#32 [frontend build 6/6] RUN npm run build
+#32 CACHED
+
+#33 [frontend build 3/6] COPY package.json package-lock.json ./
+#33 CACHED
+
+#34 [frontend runtime 4/4] COPY --from=build /app/dist/ /usr/share/nginx/html/cnp/
+#34 CACHED
+
+#35 [proxy] exporting to image
+#35 exporting layers done
+#35 exporting manifest sha256:b9d08c0c537316e996940842b514d66c454b1a2b2f1c4a27d1bc3e9e63dee46a done
+#35 exporting config sha256:bc492464892d88b6d616797565810d318947487b81e92c4f6f1f1d4cf4cbeb81 done
+#35 exporting attestation manifest sha256:6487ac7f083fcfe629fafea2e8fa757f59eaa85af147872e976d79fa9299263f
+#35 exporting attestation manifest sha256:6487ac7f083fcfe629fafea2e8fa757f59eaa85af147872e976d79fa9299263f 0.0s done
+#35 exporting manifest list sha256:48101139890febe9223638e5a9cc61fc16daeaad6d40a2f78d4ac134839da7a8 0.0s done
+#35 naming to docker.io/library/cnp-proxy:dev done
+#35 unpacking to docker.io/library/cnp-proxy:dev 0.0s done
+#35 DONE 0.1s
+
+#36 [frontend] exporting to image
+#36 exporting layers done
+#36 exporting manifest sha256:206313867b3ad227b93b1700071e8f05c55bc2566f7e87633062844d11843e7e done
+#36 exporting config sha256:02b51e5174e023501cf0f71b799867c2497d6fb12d2cabee8385d70369a56f25 done
+#36 exporting attestation manifest sha256:2596edd9ddf68cce0948fa32b51e3c19d0c94a23eeae7c0dd07549067a4efdad 0.0s done
+#36 exporting manifest list sha256:b4c428182a43de9057f6e95abb7a93850ea08784b6025929f2da5c2ecec19b72 0.0s done
+#36 naming to docker.io/library/cnp-frontend:dev done
+#36 unpacking to docker.io/library/cnp-frontend:dev 0.0s done
+#36 DONE 0.1s
+
+#37 [proxy] resolving provenance for metadata file
+#37 DONE 0.0s
+
+#38 [frontend] resolving provenance for metadata file
+#38 DONE 0.0s
+ Image cnp-proxy:dev Built 
+ Image cnp-backend:dev Built 
+ Image cnp-frontend:dev Built 
+ Container cnp-dev-backend-1 Recreate 
+ Container cnp-dev-frontend-1 Recreate 
+ Container cnp-dev-frontend-1 Recreated 
+ Container cnp-dev-backend-1 Recreated 
+ Container cnp-dev-proxy-1 Recreate 
+ Container cnp-dev-proxy-1 Recreated 
+ Container cnp-dev-frontend-1 Starting 
+ Container cnp-dev-backend-1 Starting 
+ Container cnp-dev-frontend-1 Started 
+ Container cnp-dev-backend-1 Started 
+ Container cnp-dev-frontend-1 Waiting 
+ Container cnp-dev-backend-1 Waiting 
+ Container cnp-dev-frontend-1 Healthy 
+ Container cnp-dev-backend-1 Healthy 
+ Container cnp-dev-proxy-1 Starting 
+ Container cnp-dev-proxy-1 Started 
