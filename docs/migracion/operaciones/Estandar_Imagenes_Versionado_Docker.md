@@ -1,7 +1,7 @@
 # Estandar de imagenes y versionado Docker
 
 Fecha base: 2026-03-09
-Estado: Vigente para Sprint 2 (`B.2.1.1`)
+Estado: Vigente para Sprint 2 (`B.2.1.1`, `B.3.1`)
 
 ## 1) Objetivo
 
