@@ -1,0 +1,138 @@
+services:
+  proxy:
+    image: cnp-proxy:dev
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+      args:
+        OCI_TITLE: cnp-proxy
+        OCI_VERSION: dev
+        OCI_REVISION: local
+        OCI_SOURCE: local
+        OCI_CREATED: unknown
+    restart: unless-stopped
+    depends_on:
+      frontend:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    ports:
+      - "${PROXY_HTTP_PORT:-8080}:80"
+    environment:
+      PROXY_FRONTEND_UPSTREAM: "http://frontend:80"
+      PROXY_BACKEND_UPSTREAM: "http://backend:3000"
+      PROXY_BASE_PATH: "/cnp"
+      PROXY_API_PREFIX: "/api"
+      PROXY_SOCKETIO_PATH: "/socket.io"
+      PROXY_SOCKETIO_COMPAT_PATH: "/cnp/socket.io"
+    networks:
+      - red_publica
+      - red_aplicacion
+
+  frontend:
+    image: cnp-frontend:dev
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_BASEPATH: "/cnp/"
+        VITE_API_BASE_URL: "/api"
+        VITE_API_URL: "/api"
+        VITE_SOCKET_URL: ""
+        VITE_VALIDATION_ENDPOINT: ""
+        VITE_STATUS_ENDPOINT: ""
+        VITE_CHANGE_PASSWORD_ENDPOINT: ""
+        VITE_LOGIN_ENDPOINT: "/auth/login"
+        VITE_STATUS_PAGE_URL: ""
+        VITE_SECRET_KEY: "${VITE_SECRET_KEY:-CAMBIAR_EN_CADA_ENTORNO}"
+        IIS_BACKEND_UPSTREAM: "http://backend:3000"
+        OCI_TITLE: cnp-frontend
+        OCI_VERSION: dev
+        OCI_REVISION: local
+        OCI_SOURCE: local
+        OCI_CREATED: unknown
+    restart: unless-stopped
+    expose:
+      - "80"
+    networks:
+      - red_aplicacion
+
+  backend:
+    image: cnp-backend:dev
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        OCI_TITLE: cnp-backend
+        OCI_VERSION: dev
+        OCI_REVISION: local
+        OCI_SOURCE: local
+        OCI_CREATED: unknown
+    restart: unless-stopped
+    expose:
+      - "3000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      NODE_ENV: "production"
+      PORT: "3000"
+      SERVER_PORT: "3000"
+      TRUST_PROXY: "true"
+      BASE_PATH: "/cnp"
+      API_PREFIX: "/api"
+      SOCKETIO_PATH: "/socket.io"
+      FRONTEND_URL: "${FRONTEND_URL:-http://localhost:8080}"
+      BACKEND_URL: "${BACKEND_URL:-}"
+      CORS_ORIGINS: "${CORS_ORIGINS:-http://localhost:8080}"
+      CSRF_ORIGINS: "${CSRF_ORIGINS:-http://localhost:8080}"
+      DB_SERVER_VALIDACION: "${DB_SERVER_VALIDACION:-host.docker.internal}"
+      DB_PORT_VALIDACION: "${DB_PORT_VALIDACION:-1433}"
+      VALIDACION_DATABASE: "${VALIDACION_DATABASE:-TablasComunes}"
+      DB_AUTH_VALIDACION: "${DB_AUTH_VALIDACION:-sql}"
+      DB_USER_VALIDACION: "${DB_USER_VALIDACION:-USUARIO_SQL_VALIDACION}"
+      DB_PASSWORD_VALIDACION: "${DB_PASSWORD_VALIDACION:-CLAVE_SQL_VALIDACION}"
+      DB_SERVER_CONSULTA: "${DB_SERVER_CONSULTA:-host.docker.internal}"
+      DB_PORT_CONSULTA: "${DB_PORT_CONSULTA:-1433}"
+      CONSULTA_DATABASE: "${CONSULTA_DATABASE:-DBCSASPv2}"
+      DB_AUTH_CONSULTA: "${DB_AUTH_CONSULTA:-sql}"
+      DB_USER_CONSULTA: "${DB_USER_CONSULTA:-USUARIO_SQL_CONSULTA}"
+      DB_PASSWORD_CONSULTA: "${DB_PASSWORD_CONSULTA:-CLAVE_SQL_CONSULTA}"
+      DB_SERVER_RECEPCION: "${DB_SERVER_RECEPCION:-host.docker.internal}"
+      DB_PORT_RECEPCION: "${DB_PORT_RECEPCION:-1433}"
+      RECEPCION_DATABASE: "${RECEPCION_DATABASE:-DBCSASPv2}"
+      DB_AUTH_RECEPCION: "${DB_AUTH_RECEPCION:-sql}"
+      DB_USER_RECEPCION: "${DB_USER_RECEPCION:-USUARIO_SQL_RECEPCION}"
+      DB_PASSWORD_RECEPCION: "${DB_PASSWORD_RECEPCION:-CLAVE_SQL_RECEPCION}"
+      DB_SERVER: "${DB_SERVER:-host.docker.internal}"
+      DB_PORT: "${DB_PORT:-1433}"
+      DB_USER: "${DB_USER:-USUARIO_SQL_COMPARTIDO}"
+      DB_PASSWORD: "${DB_PASSWORD:-CLAVE_SQL_COMPARTIDA}"
+      SQL_ENCRYPT: "${SQL_ENCRYPT:-false}"
+      SQL_TRUST_SERVER_CERTIFICATE: "${SQL_TRUST_SERVER_CERTIFICATE:-true}"
+      SQL_POOL_MAX: "${SQL_POOL_MAX:-10}"
+      SQL_POOL_MIN: "${SQL_POOL_MIN:-0}"
+      SQL_POOL_IDLE_MILLIS: "${SQL_POOL_IDLE_MILLIS:-30000}"
+      VALIDATION_CACHE_TTL_MS: "${VALIDATION_CACHE_TTL_MS:-300000}"
+      RUTA_ARCHIVO_ENTORNO: "${RUTA_ARCHIVO_ENTORNO:-}"
+      SMTP_HOST: "${SMTP_HOST:-host.docker.internal}"
+      SMTP_PORT: "${SMTP_PORT:-2525}"
+      SMTP_USER: "${SMTP_USER:-SMTP_USER}"
+      SMTP_PASS: "${SMTP_PASS:-SMTP_PASS}"
+      SMTP_SECURE: "${SMTP_SECURE:-false}"
+      SMTP_FROM: "${SMTP_FROM:-CNP <no-reply@example.com>}"
+      JWT_PRIVATE_KEY_PATH: "${JWT_PRIVATE_KEY_PATH:-/run/secrets/es256-priv.pem}"
+      JWT_KID: "${JWT_KID:-val-2025-07-dev}"
+      JWT_SECRET: "${JWT_SECRET:-CAMBIAR_EN_CADA_ENTORNO}"
+      RATE_LIMIT_WINDOW_MS: "${RATE_LIMIT_WINDOW_MS:-60000}"
+      RATE_LIMIT_MAX: "${RATE_LIMIT_MAX:-300}"
+      LOG_LEVEL: "${LOG_LEVEL:-debug}"
+      FILE_UPLOAD_MAX_MB: "${FILE_UPLOAD_MAX_MB:-50}"
+    networks:
+      - red_aplicacion
+
+networks:
+  red_publica:
+    driver: bridge
+  red_aplicacion:
+    driver: bridge
+    internal: true
